@@ -89,7 +89,7 @@ void checkinSys(Sistema & ER){
 
 	while(!f_pontos_partilha.eof()){
 		PontoPartilha p1;
-		f_pontos_partilha >> p1;
+	//	f_pontos_partilha >> p1;
 
 		if(p1.getNome()==""){
 			break;

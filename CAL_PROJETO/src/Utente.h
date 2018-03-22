@@ -26,7 +26,7 @@ public:
 	Localizacao getLocalizacao() const;
 	Bicicleta* getBike() const;
 	bool getAvailable() const;
-	vector<Utilizacao> getHistorico() const;
+	vector<Utilizacao> getHistorico();
 
 	//M�todos Set
 	static void setLastId();
@@ -48,7 +48,7 @@ public:
 	void alugaBicicleta(Bicicleta* b, Utilizacao ut);
 	Bicicleta* removeBicicleta(vector<int> index_distancias);
 	void updateLocation(int index);
-	void displayHistoric() const;
+	void displayHistoric() ;
 
 
 };

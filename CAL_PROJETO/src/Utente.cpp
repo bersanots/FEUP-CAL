@@ -183,7 +183,7 @@ bool Utente::getAvailable() const {
 /**
  * @return Retorna vetor de utilizacoes ja liquidadas do utente.
  */
-vector<Utilizacao> Utente::getHistorico() const{
+vector<Utilizacao> Utente::getHistorico(){
 	return historico;
 }
 
@@ -252,3 +252,6 @@ void Utente::addUse(Utilizacao ut){
 	historico.push_back(ut);
 }
 
+void Utente::displayHistoric(){
+
+}

@@ -161,16 +161,16 @@ void menu_interface(Sistema &ER){
 		cout << "1  - Alugar bicicleta" << endl;
 		cout << "2  - Devolver bicicleta" << endl;
 		cout << "3  - Historico" << endl;
-		cout << "6  - Atualizar localizacao" << endl;
-		cout << "7  - Pontos de partilha mais prximos" << endl;
-		cout << "9  - Informa��es sobre ECO_RIDES" << endl;
-		cout << "10 - Logout" << endl << endl;
+		cout << "4  - Atualizar localizacao" << endl;
+		cout << "5  - Pontos de partilha mais prximos" << endl;
+		cout << "6  - Informa��es sobre ECO_RIDES" << endl;
+		cout << "7  - Logout" << endl << endl;
 
 		while(1)
 		{
 			try {
 
-				cout << endl << "Introduza uma op��o (1-10): ";
+				cout << endl << "Introduza uma opcao (1-7): ";
 				cin >> option;
 				cin.ignore(1000,'\n');
 
@@ -179,19 +179,19 @@ void menu_interface(Sistema &ER){
 
 				value = stoi(option);
 
-				if(value < 1 || value > 10)
+				if(value < 1 || value > 7)
 					throw OpcaoInvalida<int>(value);
 
 				break;
 			}
 			catch (OpcaoInvalida<int> &op){
 
-				cout << "Op��o inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 			}
 			catch (OpcaoInvalida<string> &op){
 
-				cout << "Op��o inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 			}
 		};
@@ -203,7 +203,7 @@ void menu_interface(Sistema &ER){
 		switch (value)
 		{
 		case 1:
-			ER.alugaBike(index);
+			ER.alugaBike(index); //Algoritmo de
 			break;
 		case 2:
 			ER.devolveBike(index);
