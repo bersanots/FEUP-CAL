@@ -2,7 +2,7 @@
 #include "Sistema.h"
 
 /////////////////////////////////////
-// IMPLEMENTAÇÃO DE FUNCOES GERAIS //
+// IMPLEMENTAï¿½ï¿½O DE FUNCOES GERAIS //
 /////////////////////////////////////
 
 /**
@@ -95,9 +95,9 @@ void menu_interface(Sistema &ER){
 
 	mensagemInicial();
 
-	int attempts { 0 };
-	int identificacao { };
-	int index {};	//Indice do utente no vector de utentes do sistema
+	int attempts=0;
+	int identificacao;
+	int index;	//Indice do utente no vector de utentes do sistema
 	string info;
 
 	cout << "Utentes: " << endl << endl;
@@ -126,20 +126,20 @@ void menu_interface(Sistema &ER){
 		}
 		catch (OpcaoInvalida<int> &op){
 
-			cout << "ID inválido (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "ID invï¿½lido (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "ID inválido (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "ID invï¿½lido (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 	};
 
 	if(attempts >= 3)
 	{
-		cout << endl << "Acesso negado: número de tentativas esgotado" << endl << endl;
+		cout << endl << "Acesso negado: nï¿½mero de tentativas esgotado" << endl << endl;
 		system("pause");
 		system("cls");
 		return;
@@ -150,7 +150,7 @@ void menu_interface(Sistema &ER){
 	Utente* utente = ER.getUtentes().at(index);
 
 	string option;
-	int value {};
+	int value;
 
 	do
 	{
@@ -160,23 +160,17 @@ void menu_interface(Sistema &ER){
 
 		cout << "1  - Alugar bicicleta" << endl;
 		cout << "2  - Devolver bicicleta" << endl;
-		cout << "3  - Histórico de alugueres" << endl;
-		cout << "4  - Pagamentos pendentes" << endl;
-		cout << "5  - Efetuar pagamento das mensalidades" << endl;
-		cout << "6  - Atualiza localização" << endl;
-		cout << "7  - Pontos de partilha mais próximos" << endl;
-		cout << "8  - Comprar bicicletas" << endl;
-		cout << "9  - Histórico de compras" << endl;
-		cout << "10 - Lojas com maior reputação" << endl;
-		cout << "11 - Mudar o tipo de utente" << endl;
-		cout << "12 - Informações sobre ECO_RIDES" << endl;
-		cout << "13 - Logout" << endl << endl;
+		cout << "3  - Historico" << endl;
+		cout << "6  - Atualizar localizacao" << endl;
+		cout << "7  - Pontos de partilha mais prximos" << endl;
+		cout << "9  - Informaï¿½ï¿½es sobre ECO_RIDES" << endl;
+		cout << "10 - Logout" << endl << endl;
 
 		while(1)
 		{
 			try {
 
-				cout << endl << "Introduza uma opção (1-13): ";
+				cout << endl << "Introduza uma opï¿½ï¿½o (1-10): ";
 				cin >> option;
 				cin.ignore(1000,'\n');
 
@@ -185,19 +179,19 @@ void menu_interface(Sistema &ER){
 
 				value = stoi(option);
 
-				if(value < 1 || value > 13)
+				if(value < 1 || value > 10)
 					throw OpcaoInvalida<int>(value);
 
 				break;
 			}
 			catch (OpcaoInvalida<int> &op){
 
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opï¿½ï¿½o invï¿½lida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 			}
 			catch (OpcaoInvalida<string> &op){
 
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opï¿½ï¿½o invï¿½lida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 			}
 		};
@@ -205,7 +199,7 @@ void menu_interface(Sistema &ER){
 		system("cls");
 		mensagemInicial();
 
-		//Opcões possiveis apresentadas no menu
+		//Opcï¿½es possiveis apresentadas no menu
 		switch (value)
 		{
 		case 1:
@@ -218,40 +212,15 @@ void menu_interface(Sistema &ER){
 			utente->displayHistoric();
 			break;
 		case 4:
-			utente->displayPagPendentes(index);
-			break;
-		case 5:
-			utente->efetuaPag(index);
-			break;
-		case 6:
 			utente->updateLocation(index);
 			break;
-		case 7:
+		case 5:
 			ER.displayNearestPP(index);
 			break;
-		case 8:
-			ER.compraBike(index);
-			break;
-		case 9:
-			utente->displayHistoricoCompras();
-			break;
-		case 10:
-			ER.displayMostRepStores();
-			break;
-		case 11:
-			value = ER.mudaTipoUT(index);
-			if(value == 0)
-			{
-				cout << "Será agora efetuado o logout do utente para atualização dos dados do mesmo !" << endl << endl;
-				value = 14;
-			}
-			else
-				value = 11;
-			break;
-		case 12:
+		case 6:
 			ER.getInfo();
 			break;
-		case 13:
+		case 7:
 			if(!utente->getAvailable()) {
 				cout << endl << "Antes de efetuar logout o utente necessita primeiramente de devolver a bicicleta !" << endl;
 				value = -1;
@@ -259,104 +228,7 @@ void menu_interface(Sistema &ER){
 			cout << endl;
 			break;
 		}
-		if(value != 13)
-			system("pause");
 
-		system("cls");
-
-	}while((value != 13) && (value != 14));
-
-	cout << endl;
-	system("cls");
-	return;
-}
-
-
-void oficina_interface(Sistema &ER) {
-
-	system("cls");
-
-	string option;
-	int value {};
-
-	do
-	{
-		mensagemInicial();
-
-		cout << "Oficina" << endl << endl;
-
-		cout << "1 - Comprar peças" << endl;
-		cout << "2 - Verificar qual o fornecedor que vendeu uma determinada peça ao preço mais baixo" << endl;
-		cout << "3 - Adicionar peças" << endl;
-		cout << "4 - Remover peças" << endl;
-		cout << "5 - Informação acerca das peças" << endl;
-		cout << "6 - Informação acerca dos fornecedores" << endl;
-		cout << "7 - Bicicletas em reparação" << endl;
-		cout << "8 - Voltar" << endl;
-
-
-		while(1)
-		{
-			try {
-
-				cout << endl << "Introduza uma opção (1-8): ";
-				cin >> option;
-
-				if(valid_number(option) == false)
-					throw OpcaoInvalida<string>(option);
-
-				value = stoi(option);
-
-				if(value < 1 || value > 8)
-					throw OpcaoInvalida<int>(value);
-
-				break;
-			}
-			catch (OpcaoInvalida<int> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-			catch (OpcaoInvalida<string> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-		};
-
-		system("cls");
-		mensagemInicial();
-
-		//Opcões possíveis apresentadas no menu
-		switch (value)
-		{
-		case 1:
-			ER.getOficina().buyPiece();
-			ER.removeFromRepairShop();
-			break;
-		case 2:
-			ER.getOficina().displayPieceLowestPrice();
-			break;
-		case 3:
-			ER.getOficina().addPiece();
-			break;
-		case 4:
-			ER.getOficina().removePieceBST();
-			break;
-		case 5:
-			ER.getOficina().displayBSTInfo();
-			break;
-		case 6:
-			ER.getOficina().displaySupliersInfo();
-			break;
-		case 7:
-			ER.getOficina().displayBrokenBikeInfo();
-			break;
-		case 8:
-			break;
-		}
 		if(value != 8)
 			system("pause");
 
@@ -364,314 +236,14 @@ void oficina_interface(Sistema &ER) {
 
 	}while(value != 8);
 
-	return;
-
-}
-
-void bicicleta_interface(Sistema &ER) {
-
+	cout << endl;
 	system("cls");
-
-	string option;
-	int value {};
-
-	do
-	{
-		mensagemInicial();
-
-		cout << "Bicicletas" << endl << endl;
-
-		cout << "1 - Adicionar bicicleta" << endl;
-		cout << "2 - Remover bicicleta" << endl;
-		cout << "3 - Abater bicicleta" << endl;
-		cout << "4 - Remover bicicleta abatida" << endl;
-		cout << "5 - Consultar bicicletas enviadas para abate" << endl;;
-		cout << "6 - Voltar" << endl;
-
-		while(1)
-		{
-			try {
-
-				cout << endl << "Introduza uma opção (1-6): ";
-				cin >> option;
-
-				if(valid_number(option) == false)
-					throw OpcaoInvalida<string>(option);
-
-				value = stoi(option);
-
-				if(value < 1 || value > 6)
-					throw OpcaoInvalida<int>(value);
-
-				break;
-			}
-			catch (OpcaoInvalida<int> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-			catch (OpcaoInvalida<string> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-		};
-
-		system("cls");
-		mensagemInicial();
-
-		//Opcões possíveis apresentadas no menu
-		switch (value)
-		{
-		case 1:
-			ER.adicionaBike();
-			break;
-		case 2:
-			ER.removeBike();
-			break;
-		case 3:
-			ER.abateBike();
-			break;
-		case 4:
-			ER.removeFromJunkyard();
-			break;
-		case 5:
-			ER.displayJunkyardInfo();
-			break;
-		case 6:
-			break;
-		}
-		if(value != 6)
-			system("pause");
-
-		system("cls");
-
-	}while(value != 6);
-
 	return;
 }
-
-void ponto_partilha_interface(Sistema &ER) {
-
-	system("cls");
-
-	string option;
-	int value {};
-
-	do
-	{
-		mensagemInicial();
-
-		cout << "Pontos de Partilha" << endl << endl;
-
-		cout << "1 - Adiciona ponto partilha" << endl;
-		cout << "2 - Remove ponto de partilha" << endl;
-		cout << "3 - Voltar" << endl;
-
-		while(1)
-		{
-			try {
-
-				cout << endl << "Introduza uma opção (1-3): ";
-				cin >> option;
-
-				if(valid_number(option) == false)
-					throw OpcaoInvalida<string>(option);
-
-				value = stoi(option);
-
-				if(value < 1 || value > 3)
-					throw OpcaoInvalida<int>(value);
-
-				break;
-			}
-			catch (OpcaoInvalida<int> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-			catch (OpcaoInvalida<string> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-		};
-
-		system("cls");
-		mensagemInicial();
-
-		//Opcões possíveis apresentadas no menu
-		switch (value)
-		{
-		case 1:
-			ER.addPontoPartilha();
-			break;
-		case 2:
-			ER.removePonto();
-			break;
-		case 3:
-			break;
-		}
-
-		system("cls");
-
-	}while(value != 3);
-
-	return;
-}
-
-void utentes_interface(Sistema &ER) {
-
-	system("cls");
-
-	string option;
-	int value {};
-
-	do
-	{
-		mensagemInicial();
-
-		cout << "Utentes" << endl << endl;
-
-		cout << "1 - Remove utente" << endl;
-		cout << "2 - Voltar" << endl;
-
-		while(1)
-		{
-			try {
-
-				cout << endl << "Introduza uma opção (1-2): ";
-				cin >> option;
-
-				if(valid_number(option) == false)
-					throw OpcaoInvalida<string>(option);
-
-				value = stoi(option);
-
-				if(value < 1 || value > 2)
-					throw OpcaoInvalida<int>(value);
-
-				break;
-			}
-			catch (OpcaoInvalida<int> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-			catch (OpcaoInvalida<string> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-		};
-
-		system("cls");
-		mensagemInicial();
-
-		//Opcões possíveis apresentadas no menu
-		switch (value)
-		{
-		case 1:
-			ER.removeUtente();
-			break;
-		case 2:
-			break;
-		}
-
-		system("cls");
-
-	}while(value != 2);
-
-	return;
-}
-
-void lojas_interface(Sistema &ER) {
-
-	system("cls");
-
-	string option;
-	int value {};
-
-	do
-	{
-		mensagemInicial();
-
-		cout << "Lojas" << endl << endl;
-
-		cout << "1 - Adiciona loja" << endl;
-		cout << "2 - Remove loja" << endl;
-		cout << "3 - Informação sobre uma determinada loja" << endl;
-		cout << "4 - Voltar" << endl;
-
-		while(1)
-		{
-			try {
-
-				cout << endl << "Introduza uma opção (1-4): ";
-				cin >> option;
-
-				if(valid_number(option) == false)
-					throw OpcaoInvalida<string>(option);
-
-				value = stoi(option);
-
-				if(value < 1 || value > 4)
-					throw OpcaoInvalida<int>(value);
-
-				break;
-			}
-			catch (OpcaoInvalida<int> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-			catch (OpcaoInvalida<string> &op){
-
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
-				cin.clear();
-				cin.ignore(1000,'\n');
-			}
-		};
-
-		system("cls");
-		mensagemInicial();
-
-		//Opcões possíveis apresentadas no menu
-		switch (value)
-		{
-		case 1:
-			ER.addStore();
-			break;
-		case 2:
-			ER.removeStore();
-			break;
-		case 3:
-			ER.displayStoreInfo();
-			break;
-		case 4:
-			break;
-		}
-		if(value != 4)
-			system("pause");
-
-		system("cls");
-
-	}while(value != 4);
-
-	return;
-}
-
 
 /**
  * Primeiramente pede ao utilizador que insira a senha ("1234") para aceder a opcoes administrativas.
- * Apresenta no ecra os casos de utilizacao para o administrador escolher a opcao que pretende (7 opcoes no total).
+ * Apresenta no ecra os casos de utilizacao para aministrador escolher a opcao que pretende (7 opcoes no total).
  * Depois de introduzida a opcao, e efetuado o procedimento que corresponde a opcao escolhida.
  * Para cada uma das 6 primeiras opcoes e chamado um metodo da classe Sistema que
  * executa o procedimento necessario para o que e pretendido, e a ultima opcao , 7 - Sair,
@@ -684,7 +256,7 @@ void admin_interface(Sistema &ER) {
 
 	mensagemInicial();
 
-	int attempts { 0 };
+	int attempts=0;
 	string info;
 
 	while(attempts < 3)
@@ -704,7 +276,7 @@ void admin_interface(Sistema &ER) {
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "Password inválida (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Password invï¿½lida (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 			cin.ignore(1000,'\n');
 		}
@@ -712,7 +284,7 @@ void admin_interface(Sistema &ER) {
 
 	if(attempts >= 3)
 	{
-		cout << endl << "Acesso negado: número de tentativas esgotado" << endl << endl;
+		cout << endl << "Acesso negado: nï¿½mero de tentativas esgotado" << endl << endl;
 		system("pause");
 		system("cls");
 		return;
@@ -721,20 +293,15 @@ void admin_interface(Sistema &ER) {
 	system("cls");
 
 	string option;
-	int value {};
+	int value;
 
 	do
 	{
 		mensagemInicial();
 
-		cout << "Administração" << endl << endl;
-
-		cout << "1 - Bicicletas" << endl;
-		cout << "2 - Pontos de Partilha" << endl;
-		cout << "3 - Utentes" << endl;
-		cout << "4 - Lojas" << endl;
-		cout << "5 - Oficina" << endl;
-		cout << "6 - Informações sobre ECO_RIDES" << endl;
+		cout << "Administraï¿½ï¿½o" << endl << endl;
+		cout << "5 - Remove utente" << endl;
+		cout << "6 - Informaï¿½ï¿½es sobre ECO_RIDES" << endl;
 		cout << "7 - Sair" << endl;
 
 
@@ -742,7 +309,7 @@ void admin_interface(Sistema &ER) {
 		{
 			try {
 
-				cout << endl << "Introduza uma opção (1-7): ";
+				cout << endl << "Introduza uma opcao (1-7): ";
 				cin >> option;
 
 				if(valid_number(option) == false)
@@ -757,13 +324,13 @@ void admin_interface(Sistema &ER) {
 			}
 			catch (OpcaoInvalida<int> &op){
 
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opï¿½ï¿½o invï¿½lida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 				cin.ignore(1000,'\n');
 			}
 			catch (OpcaoInvalida<string> &op){
 
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opï¿½ï¿½o invï¿½lida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 				cin.ignore(1000,'\n');
 			}
@@ -772,32 +339,10 @@ void admin_interface(Sistema &ER) {
 		system("cls");
 		mensagemInicial();
 
-		//Opcões possíveis apresentadas no menu
+		//Opcï¿½es possï¿½veis apresentadas no menu
 		switch (value)
-		{
-		case 1:
-			bicicleta_interface(ER);
-			break;
-		case 2:
-			ponto_partilha_interface(ER);
-			break;
-		case 3:
-			utentes_interface(ER);
-			break;
-		case 4:
-			lojas_interface(ER);
-			break;
-		case 5:
-			oficina_interface(ER);
-			break;
-		case 6:
-			ER.getInfo();
-			break;
-		case 7:
-			cout << endl;
-			break;
-		}
-		if(value == 6)
+		{}
+		if(value != 7)
 			system("pause");
 
 		system("cls");
@@ -820,7 +365,7 @@ void admin_interface(Sistema &ER) {
  */
 void openInterface(Sistema & ER){
 
-	int value { };
+	int value;
 	string option;
 
 	do
@@ -835,7 +380,7 @@ void openInterface(Sistema & ER){
 		while(1)
 		{
 			try{
-				cout << endl << "Introduza uma opção (1-4): ";
+				cout << endl << "Introduza uma opï¿½ï¿½o (1-4): ";
 				cin >> option;
 				cin.ignore(1000,'\n');
 				if(valid_number(option) == false)
@@ -849,24 +394,22 @@ void openInterface(Sistema & ER){
 			}
 			catch (OpcaoInvalida<int> &op){
 
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opï¿½ï¿½o invï¿½lida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 			}
 			catch (OpcaoInvalida<string> &op){
 
-				cout << "Opção inválida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opï¿½ï¿½o invï¿½lida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 			}
 		};
 
 		system("cls");
 
-		//Opcões possiveis apresentadas no menu
+		//Opcï¿½es possiveis apresentadas no menu
 		switch (value)
 		{
-		case 1:
-			ER.addNewUtente();
-			break;
+
 		case 2:
 			menu_interface(ER);
 			break;

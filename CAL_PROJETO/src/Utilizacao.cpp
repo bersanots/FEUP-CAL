@@ -67,12 +67,6 @@ double Utilizacao::getPrice() const {
 		return useTime*2;
 }
 
-/**
- * @return Retorna o nome da localizacao do ponto de partilha onde a bicicleta foi alugada.
- */
-string Utilizacao::getLocation() const {
-	return localizacao;
-}
 
 // OTHERS //
 
@@ -86,6 +80,7 @@ void Utilizacao::displayUtilizacao() const{
 	cout << "Data (DD/MM/AAAA): " << data << endl;
 	cout << "Ponto de Partilha: ECO_RIDES_" << pontoPartilha << endl;
 	cout << "Localização: " << localizacao << endl;
+
 	return;
 }
 
@@ -154,42 +149,4 @@ void Data::setMes(unsigned int m){
  */
 void Data::setAno(unsigned int a){
 	this->ano=a;
-}
-
-////////////
-// OTHERS //
-////////////
-
-/**
- * Overload do operador == para comparacao de 2 datas.
- * Uma data e igual a outra se o dia , o mes e o ano forem iguais.
- * @param dt1 data com quem vai ser comparada
- * @return Retorna true se a condicao se verificar e false caso contrario.
- */
-bool Data::operator== (const Data &dt1) const {
-
-	if((ano == dt1.getAno()) && (mes == dt1.getMes()) && (dia == dt1.getDia()))
-		return true;
-
-	return false;
-}
-
-/**
- * Overload do operador < para comparacao de 2 datas.
- * Uma data e menor que outra se o ano e menor.
- * Se o ano for igual, e menor aquela que tem menor mes.
- * Em caso de igualdade de ano e mes, e menor aquela que tem menor dia.
- * @param dt data com quem vai ser comparada
- * @return Retorna true se a condicao se verificar e false caso contrario.
- */
-bool Data::operator< (const Data &dt) const {
-
-	if(ano < dt.getAno())
-		return true;
-	else if ((ano == dt.ano) && (mes < dt.mes))
-		return true;
-	else if ((ano == dt.ano) && (mes == dt.mes) && (dia < dt.dia))
-		return true;
-
-	return false;
 }

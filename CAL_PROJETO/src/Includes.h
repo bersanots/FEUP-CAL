@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <windows.h>
+//#include <windows.h>
 #include <iomanip>
 #include <stdio.h>
 #include <ctype.h>
@@ -16,12 +16,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <fstream>
-#include <conio.h>
-#include <unordered_set>
-#include <queue>
-#include <utility>
-#include <stack>
-#include <time.h>
+//#include <conio.h>
 
 
 using namespace std;

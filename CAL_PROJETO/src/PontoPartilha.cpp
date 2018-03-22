@@ -36,7 +36,7 @@ PontoPartilha::PontoPartilha(Localizacao spot,unsigned int storage,string name) 
 void PontoPartilha::removeBike(string name) {
 
 	vector<Bicicleta *> bikes;
-	int indicator{};
+	int indicator;
 
 	if(name.at(0) == 'u')
 	{
@@ -58,12 +58,12 @@ void PontoPartilha::removeBike(string name) {
 }
 
 /**
- * Adiciona a bicicleta bike ao ponto de partilha.
- * @param bike apontador para a bicicleta que se pretende adicionar
+ * Adiciona a bicicleta bike do ponto de partilha.
+ * @param bike apontador de bicicleta que se pretende adicionar
  */
 void PontoPartilha::adicionaBike(Bicicleta* bike) {
 
-	int indicator {};
+	int indicator;
 	string name = bike->getBikeName();
 
 	if(name.at(0) == 'u')
@@ -84,7 +84,7 @@ void PontoPartilha::adicionaBike(Bicicleta* bike) {
 }
 
 /**
- * Limpa o vetor das bicicletas do ponto de partilha, de modo a que o mesmo fique sem bicicletas.
+ * Limpa o vetor das bicicletas do ponto de partilha, de modo que o mesmo fica sem bicicletas.
  */
 void PontoPartilha::limpaVectorBike(){
 	bicicletas.at(0).clear();
@@ -92,6 +92,7 @@ void PontoPartilha::limpaVectorBike(){
 	bicicletas.at(2).clear();
 	bicicletas.at(3).clear();
 }
+
 
 /////////////////
 // METODOS GET //
@@ -120,7 +121,7 @@ int PontoPartilha::getCapacidade() const {
 
 /**
  * Retorna um vetor com a quantidade de cada tipo de bicicletas existentes no ponto de partilha.
- * O vetor e composto pelos 4 elementos seguintes:
+ * O vetor e composto pelos 4 elementos segintes:
  *  (1) quantidade de bicicletas do tipo "Urbana",
  *  (2) quantidade de bicicletas do tipo "Urbana Simples",
  *  (3) quantidade de bicicletas do tipo "Corrida",
@@ -134,6 +135,7 @@ vector<int> PontoPartilha::getNumberOfBikes() const {
 	for(unsigned int i = 0; i < bicicletas.size(); i++){
 		number_bikes.push_back(bicicletas.at(i).size());
 	}
+
 	return number_bikes;
 }
 

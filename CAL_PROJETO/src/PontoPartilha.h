@@ -22,15 +22,13 @@ public:
 	vector <string> getBikeTypes();
 	vector <vector<Bicicleta *> > getBikes() const;
 
-	//Métodos Set
+	//Mï¿½todos Set
 	void setNome(string name);
 
 	//Others
 	void limpaVectorBike();
 	void removeBike(string name);
 	void adicionaBike(Bicicleta* bike);
-
-	//Friend functions
 	friend ostream & operator <<(ostream & o, const PontoPartilha & p);
 	friend istream & operator >>(istream & i, PontoPartilha & p);
 };
@@ -50,6 +48,7 @@ inline ostream& operator <<(ostream & o, const PontoPartilha & p)
  * Overload do operador de extracao usado para recolher dos ficheiros os objetos do tipo PontoPartilha,
  * de modo a recriar o sistema da ultima execucao.
  */
+/*
 inline istream& operator >>(istream & i, PontoPartilha & p)
 {
 	char b1, b2, b3, b4, b5, b6;
@@ -57,7 +56,7 @@ inline istream& operator >>(istream & i, PontoPartilha & p)
 	vector<Bicicleta *> v1,v2,v3,v4;
 	vector <vector<Bicicleta *> > bikes{v1,v2,v3,v4};
 
-	Bicicleta * b; //apontador genérico apenas para reservar espaço no vetor
+	Bicicleta * b; //apontador genï¿½rico apenas para reservar espaï¿½o no vetor
 
 	getline(i,p.nome,'/');
 	i >> p.local >> b1 >> p.capacidade >> b2 >> u >> b3 >> uc >> b4 >> c >> b5 >> inf >> b6;
@@ -77,4 +76,4 @@ inline istream& operator >>(istream & i, PontoPartilha & p)
 
 	p.bicicletas=bikes;
 	return i;
-}
+}*/
