@@ -11,12 +11,12 @@ public:
 	Localizacao(double x, double y);
 	Localizacao(string nome, double x, double y);
 
-	//Métodos Get
+	//Metodos Get
 	string getNome() const;
 	double getX() const;
 	double getY() const;
 
-	//Métodos Set
+	//Metodos Set
 	void setNome(string nome);
 	void setX(double x);
 	void setY(double y);

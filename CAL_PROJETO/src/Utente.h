@@ -19,7 +19,7 @@ public:
 	Utente();
 	explicit Utente(string nome, Localizacao spot);
 
-	//M�todos Get
+	//Metodos Get
 	static int getLastId();
 	int getId() const;
 	string getNome() const;
@@ -28,7 +28,7 @@ public:
 	bool getAvailable() const;
 	vector<Utilizacao> getHistorico();
 
-	//M�todos Set
+	//Metodos Set
 	static void setLastId();
 	void setIDBackward();
 	void setID(int identificacao);

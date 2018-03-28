@@ -14,7 +14,7 @@ public:
 	 * */
 	virtual ~Bicicleta()  {};
 
-	//M�todos Get
+	//Metodos Get
 	string getBikeName() const;
 
 };

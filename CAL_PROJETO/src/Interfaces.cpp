@@ -2,7 +2,7 @@
 #include "Sistema.h"
 
 /////////////////////////////////////
-// IMPLEMENTA��O DE FUNCOES GERAIS //
+// IMPLEMENTACAO DE FUNCOES GERAIS //
 /////////////////////////////////////
 
 /**
@@ -126,20 +126,20 @@ void menu_interface(Sistema &ER){
 		}
 		catch (OpcaoInvalida<int> &op){
 
-			cout << "ID inv�lido (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "ID invalido (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "ID inv�lido (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "ID invalido (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 	};
 
 	if(attempts >= 3)
 	{
-		cout << endl << "Acesso negado: n�mero de tentativas esgotado" << endl << endl;
+		cout << endl << "Acesso negado: numero de tentativas esgotado" << endl << endl;
 		system("pause");
 		system("cls");
 		return;
@@ -162,8 +162,8 @@ void menu_interface(Sistema &ER){
 		cout << "2  - Devolver bicicleta" << endl;
 		cout << "3  - Historico" << endl;
 		cout << "4  - Atualizar localizacao" << endl;
-		cout << "5  - Pontos de partilha mais prximos" << endl;
-		cout << "6  - Informa��es sobre ECO_RIDES" << endl;
+		cout << "5  - Pontos de partilha mais proximos" << endl;
+		cout << "6  - Informacoes sobre ECO_RIDES" << endl;
 		cout << "7  - Logout" << endl << endl;
 
 		while(1)
@@ -199,11 +199,11 @@ void menu_interface(Sistema &ER){
 		system("cls");
 		mensagemInicial();
 
-		//Opc�es possiveis apresentadas no menu
+		//Opcoes possiveis apresentadas no menu
 		switch (value)
 		{
 		case 1:
-			ER.alugaBike(index); //Algoritmo de
+			ER.alugaBike(index); //Algoritmo de Dijkstra
 			break;
 		case 2:
 			ER.devolveBike(index);
@@ -229,12 +229,12 @@ void menu_interface(Sistema &ER){
 			break;
 		}
 
-		if(value != 8)
+		if(value != 7)
 			system("pause");
 
 		system("cls");
 
-	}while(value != 8);
+	}while(value != 7);
 
 	cout << endl;
 	system("cls");
@@ -276,7 +276,7 @@ void admin_interface(Sistema &ER) {
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "Password inv�lida (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Password invalida (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 			cin.ignore(1000,'\n');
 		}
@@ -284,7 +284,7 @@ void admin_interface(Sistema &ER) {
 
 	if(attempts >= 3)
 	{
-		cout << endl << "Acesso negado: n�mero de tentativas esgotado" << endl << endl;
+		cout << endl << "Acesso negado: numero de tentativas esgotado" << endl << endl;
 		system("pause");
 		system("cls");
 		return;
@@ -299,17 +299,17 @@ void admin_interface(Sistema &ER) {
 	{
 		mensagemInicial();
 
-		cout << "Administra��o" << endl << endl;
-		cout << "5 - Remove utente" << endl;
-		cout << "6 - Informa��es sobre ECO_RIDES" << endl;
-		cout << "7 - Sair" << endl;
+		cout << "Administracao" << endl << endl;
+		cout << "1 - Remover utente" << endl;
+		cout << "2 - Informacoes sobre ECO_RIDES" << endl;
+		cout << "3 - Sair" << endl;
 
 
 		while(1)
 		{
 			try {
 
-				cout << endl << "Introduza uma opcao (1-7): ";
+				cout << endl << "Introduza uma opcao (1-3): ";
 				cin >> option;
 
 				if(valid_number(option) == false)
@@ -324,13 +324,13 @@ void admin_interface(Sistema &ER) {
 			}
 			catch (OpcaoInvalida<int> &op){
 
-				cout << "Op��o inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 				cin.ignore(1000,'\n');
 			}
 			catch (OpcaoInvalida<string> &op){
 
-				cout << "Op��o inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 				cin.ignore(1000,'\n');
 			}
@@ -339,7 +339,7 @@ void admin_interface(Sistema &ER) {
 		system("cls");
 		mensagemInicial();
 
-		//Opc�es poss�veis apresentadas no menu
+		//Opcoes possiveis apresentadas no menu
 		switch (value)
 		{}
 		if(value != 7)
@@ -380,7 +380,7 @@ void openInterface(Sistema & ER){
 		while(1)
 		{
 			try{
-				cout << endl << "Introduza uma op��o (1-4): ";
+				cout << endl << "Introduza uma opcao (1-4): ";
 				cin >> option;
 				cin.ignore(1000,'\n');
 				if(valid_number(option) == false)
@@ -394,19 +394,19 @@ void openInterface(Sistema & ER){
 			}
 			catch (OpcaoInvalida<int> &op){
 
-				cout << "Op��o inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 			}
 			catch (OpcaoInvalida<string> &op){
 
-				cout << "Op��o inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
 				cin.clear();
 			}
 		};
 
 		system("cls");
 
-		//Opc�es possiveis apresentadas no menu
+		//Opcoes possiveis apresentadas no menu
 		switch (value)
 		{
 

@@ -15,19 +15,19 @@ public:
 	 */
 	Sistema() {}
 
-	//M�todos add
+	//Metodos add
 	void addPontoPartilha();
 	void addNewUtente();
 	void adicionaBike();
 	void addNewUtente(Utente* u1);				/**< Necessario para inclusao direta no sistema dos utente extraidos do ficheiro.*/
 	void addPontoPartilha(PontoPartilha* p);	/**< Necessario para inclusao direta no sistema dos pontos de partilha extraidos do ficheiro.*/
 
-	//M�todos remove
+	//Metodos remove
 	void removePonto();
 	void removeUtente();
 	void removeBike();
 
-	//M�todos Get
+	//Metodos Get
 	vector<Utente* > getUtentes() const;
 	vector<PontoPartilha* > getPontosPartilha() const;
 	void getInfo() const;
@@ -54,7 +54,7 @@ int SequentialSearch(const vector<T> &v, T x)
 	for (unsigned int i = 0; i < v.size(); i++)
 		if (v[i] == x)
 			return i;// encontrou
-	return -1; // n�o encontrou
+	return -1; // nao encontrou
 }
 
 
