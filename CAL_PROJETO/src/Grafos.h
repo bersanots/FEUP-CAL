@@ -61,6 +61,12 @@ public:
 	vector<T> topsort() const;
 	int maxNewChildren(const T &source, T &inf) const;
 	bool isDAG() const;
+	Vertex<T> *initSingleSource(const T &origin);
+	bool relax(Vertex<T> *v, Vertex<T> *w, double weight);
+	void dijkstraShortestPath(const T &origin);
+	vector<T> getPath(const T &origin, const T &dest) const;
+	bool biDirSearch(int s, int t)
+
 };
 
 /****************** Provided constructors and functions ********************/
@@ -375,7 +381,7 @@ bool Graph<T>::dfsIsDAG(Vertex<T> *v) const {
 	v->processing = false;
 	return true;
 
-
+}
 
 
 	/**
@@ -431,6 +437,90 @@ bool Graph<T>::dfsIsDAG(Vertex<T> *v) const {
 			}
 		}
 	}
+
+
+	template<class T>
+	vector<T> Graph<T>::getPath(const T &origin, const T &dest) const {
+		vector<T> res;
+		auto v = findVertex(dest);
+		if (v == nullptr || v->dist == INF) // missing or disconnected
+			return res;
+		for ( ; v != nullptr; v = v->path)
+			res.push_back(v->info);
+		reverse(res.begin(), res.end());
+		return res;
+	}
+
+	// To do the bidirectional Dijkstra algorith i have the check if the vertex are intersecting
+
+	int Graph<T>::isIntersecting(bool *s_visited, bool *t_visited){
+	 int intersectNode = -1;
+	    for(int i=0;i<vertexSet.size();i++)
+	    {
+	        // if a vertex is visited by both front
+	        // and back BFS search return that node
+	        // else return -1
+	        if(s_visited[i] && t_visited[i])
+	            return i;
+	    }
+	    return -1;
+	}
+
+	// Method for bidirectional searching
+	bool Graph::biDirSearch(int s, int t)
+	{
+	    // boolean array for BFS started from
+	    // source and target(front and backward BFS)
+	    // for keeping track on visited nodes
+	    bool s_visited[vertexSet.size()], t_visited[vertexSet.size()];
+
+	    // Keep track on parents of nodes
+	    // for front and backward search
+	    int s_parent[vertexSet.size()], t_parent[vertexSet.size()];
+
+	    // queue for front and backward search
+	    list<int> s_queue, t_queue;
+
+	    int intersectNode = -1;
+
+	    // necessary initialization
+	    for(int i=0; i<vertexSet.size(); i++)
+	    {
+	        s_visited[i] = false;
+	        t_visited[i] = false;
+	    }
+
+	    s_queue.push_back(s);
+	    s_visited[s] = true;
+
+	    // parent of source is set to -1
+	    s_parent[s]=-1;
+
+	    t_queue.push_back(t);
+	    t_visited[t] = true;
+
+	    // parent of target is set to -1
+	    t_parent[t] = -1;
+
+	    while (!s_queue.empty() && !t_queue.empty())
+	    {
+	        // Do BFS from source and target vertices
+	        bfs(&s_queue);
+	        bfs(&t_queue);
+
+	        // check for intersecting vertex
+	        intersectNode = isIntersecting(s_visited, t_visited);
+
+	        // If intersecting vertex is found
+	        // that means there exist a path
+	        if(intersectNode != -1)
+	        {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
 
 
 #endif /* GRAFOS_H_ */
