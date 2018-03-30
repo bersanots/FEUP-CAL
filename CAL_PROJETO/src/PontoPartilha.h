@@ -22,7 +22,7 @@ public:
 	vector <string> getBikeTypes();
 	vector <vector<Bicicleta *> > getBikes() const;
 
-	//M�todos Set
+	//Metodos Set
 	void setNome(string name);
 
 	//Others
@@ -56,7 +56,7 @@ inline istream& operator >>(istream & i, PontoPartilha & p)
 	vector<Bicicleta *> v1,v2,v3,v4;
 	vector <vector<Bicicleta *> > bikes{v1,v2,v3,v4};
 
-	Bicicleta * b; //apontador gen�rico apenas para reservar espa�o no vetor
+	Bicicleta * b; //apontador generico apenas para reservar espaco no vetor
 
 	getline(i,p.nome,'/');
 	i >> p.local >> b1 >> p.capacidade >> b2 >> u >> b3 >> uc >> b4 >> c >> b5 >> inf >> b6;

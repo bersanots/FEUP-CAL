@@ -44,9 +44,9 @@ void Sistema::addPontoPartilha() {
 		}
 		catch (OpcaoInvalida<string> &op) {
 			if(cond == true)
-				cout << "J� existe esse nome (" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Ja existe esse nome (" << op.opcao << ") ! Tente novamente." << endl;
 			else
-				cout << "Nome inv�lido (" << op.opcao << ") ! Tente novamente." << endl;
+				cout << "Nome invalido (" << op.opcao << ") ! Tente novamente." << endl;
 			cond = false;
 			cin.clear();
 		}
@@ -55,12 +55,12 @@ void Sistema::addPontoPartilha() {
 	Localizacao spot;
 	bool diffloc=true;
 
-	cout << endl << "Localiza��o: " << endl << endl;
+	cout << endl << "Localizacao: " << endl << endl;
 
 	while(1)
 	{
 		try {
-			cout << "Nome da Localiza��o: " ;
+			cout << "Nome da Localizacao: " ;
 			getline(cin , locname);
 			if(valid_word(locname) == false)
 				throw OpcaoInvalida<string>(nome);
@@ -84,7 +84,7 @@ void Sistema::addPontoPartilha() {
 			break;
 		}
 		catch (OpcaoInvalida<string> &op) {
-			cout << "Nome inv�lido (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Nome invalido (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 	}
@@ -117,7 +117,7 @@ void Sistema::addPontoPartilha() {
 				}
 				catch (OpcaoInvalida<string> &op){
 
-					cout << "Coordenada inv�lida (" << op.opcao << ") ! Tente novamente." << endl;
+					cout << "Coordenada invalida (" << op.opcao << ") ! Tente novamente." << endl;
 					cin.clear();
 				}
 				catch (OpcaoInvalida<double> &op){
@@ -145,7 +145,7 @@ void Sistema::addPontoPartilha() {
 				}
 				catch (OpcaoInvalida<string> &op){
 
-					cout << "Coordenada inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+					cout << "Coordenada invalida(" << op.opcao << ") ! Tente novamente." << endl;
 					cin.clear();
 				}
 				catch (OpcaoInvalida<double> &op){
@@ -163,7 +163,7 @@ void Sistema::addPontoPartilha() {
 				if((loc.getX() == coordX) && (loc.getY() == coordY))
 				{
 					newcord = false;
-					cout << "Essas coordenadas j� pertencem � localiza��o: " << loc.getNome() << endl << endl;
+					cout << "Essas coordenadas ja pertencem a localizacao: " << loc.getNome() << endl << endl;
 					break;
 				}
 			}
@@ -193,7 +193,7 @@ void Sistema::addPontoPartilha() {
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "Capacidade inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Capacidade invalida(" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 	};
@@ -238,7 +238,7 @@ void Sistema::addNewUtente() {
 			break;
 		}
 		catch (OpcaoInvalida<string> &op) {
-			cout << "Nome inv�lido(" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Nome invalido(" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 	}
@@ -278,7 +278,7 @@ void Sistema::addNewUtente() {
 	else
 		tipoUtente = "Socio";
 
-	cout << endl << "Localiza��o: " << endl << endl;
+	cout << endl << "Localizacao: " << endl << endl;
 
 	cout << "Indique as coordenadas GPS:" << endl;
 
@@ -300,7 +300,7 @@ void Sistema::addNewUtente() {
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "Coordenada inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Coordenada invalida(" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 		catch (OpcaoInvalida<double> &op){
@@ -328,7 +328,7 @@ void Sistema::addNewUtente() {
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "Coordenada inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Coordenada invalida(" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 		catch (OpcaoInvalida<double> &op){
@@ -444,7 +444,7 @@ void Sistema::adicionaBike() {
 
 	if(pontosPartilha.at(indexPP)->getCapacidade() == numberbikes)
 	{
-		cout << "A capacidade deste ponto de partilha j� foi alcan�ada ! Tente adicionar a outro ponto de partilha." << endl << endl;
+		cout << "A capacidade deste ponto de partilha ja foi alcancada ! Tente adicionar a outro ponto de partilha." << endl << endl;
 
 		return;
 	}
@@ -520,7 +520,7 @@ void Sistema::removePonto() {
 
 	if(pontosPartilha.size() == 0)
 	{
-		cout << "Neste momento n�o existem pontos de partilha !" << endl << endl;
+		cout << "Neste momento nao existem pontos de partilha !" << endl << endl;
 
 		return;
 	}
@@ -573,7 +573,7 @@ void Sistema::removeUtente() {
 
 	if(utentes.size() == 0)
 	{
-		cout << "Neste momento n�o existem utentes !" << endl << endl;
+		cout << "Neste momento nao existem utentes !" << endl << endl;
 
 		return;
 	}
@@ -612,13 +612,13 @@ void Sistema::removeUtente() {
 		}
 		catch (OpcaoInvalida<int> &op){
 
-			cout << "ID inv�lido (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "ID invalido (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "ID inv�lido (" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "ID invalido (" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 	}
@@ -695,7 +695,7 @@ void Sistema::removeBike() {
 			break;
 		}
 		catch (OpcaoInvalida<string> &op) {
-			cout << "Tipo inv�lido(" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Tipo invalido(" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 	}
@@ -755,10 +755,10 @@ void Sistema::removeBike() {
  */
 void Sistema::getInfo() const {
 
-	cout << "Informa��es:" << endl << endl;
+	cout << "Informacoes:" << endl << endl;
 
 	cout << "Nome da empresa: ECO RIDES" << endl << endl;
-	cout << "N�mero total de pontos de Partilha: " << pontosPartilha.size() << endl << endl;
+	cout << "Numero total de pontos de Partilha: " << pontosPartilha.size() << endl << endl;
 	cout << "Pontos de Partilha:" << endl << endl;
 	cout << setw (20) << left << "Nome" << setw (22) << "Local" << setw (13) << "GPS";
 	cout << setw (10) << "Urbana" << setw (18) << "Urbana Simples" <<
@@ -783,29 +783,29 @@ void Sistema::getInfo() const {
 
 	cout << endl;
 
-	cout << "N�mero total de utentes registados: " << utentes.size() << endl << endl;
+	cout << "Numero total de utentes registados: " << utentes.size() << endl << endl;
 
 	displayUtentes();
 
 	cout << endl;
 
-	cout << "Tabela de Pre�os:" << endl << endl;
+	cout << "Tabela de Precos:" << endl << endl;
 
-	cout << setw(20) << left << "Tipo de bicicleta" << "Pre�o por hora" << endl;
-	cout << setw(26) << "Urbana" << "4�" << endl <<
-			setw(26) << "Urbana Simples" << "3�" << endl <<
-			setw(26) << "Corrida" << "5�" << endl <<
-			setw(26) << "Infantil" << "2�" << endl << endl;
+	cout << setw(20) << left << "Tipo de bicicleta" << "Preco por hora" << endl;
+	cout << setw(26) << "Urbana" << "4eur" << endl <<
+			setw(26) << "Urbana Simples" << "3eur" << endl <<
+			setw(26) << "Corrida" << "5eur" << endl <<
+			setw(26) << "Infantil" << "2eur" << endl << endl;
 
 	cout << setw(18) << left << "Mensalidade" << "Acessos" << endl;
-	cout << setw(4) << " " << setw(11) << "20�" << "Infantil" << endl;
-	cout << setw(4) << " " << setw(11) << "30�" << "Infantil + Urbana Simples" << endl;
-	cout << setw(4) << " " << setw(11) << "40�" << "Infantil + Urbana Simples + Urbana" << endl;
-	cout << setw(4) << " " << setw(11) << "50�" << "Infantil + Urbana Simples + Urbana + Corrida" << endl << endl;
+	cout << setw(4) << " " << setw(11) << "20eur" << "Infantil" << endl;
+	cout << setw(4) << " " << setw(11) << "30eur" << "Infantil + Urbana Simples" << endl;
+	cout << setw(4) << " " << setw(11) << "40eur" << "Infantil + Urbana Simples + Urbana" << endl;
+	cout << setw(4) << " " << setw(11) << "50eur" << "Infantil + Urbana Simples + Urbana + Corrida" << endl << endl;
 
 	cout << "Fundadores: " << endl;
 	cout << "  - Rui Guedes" << endl;
-	cout << "  - C�sar Pinho" << endl;
+	cout << "  - Cesar Pinho" << endl;
 	cout << "  - Bernardo Santos" << endl << endl;
 
 	return;
@@ -844,7 +844,7 @@ vector<int> Sistema::getOrderedPP(int index) const {
 		distancias.push_back(utentes.at(index)->getLocalizacao().distancia(pontosPartilha.at(i)->getLocal()));
 	}
 
-	//Ordena o vetor por ordem crescente de dist�ncia
+	//Ordena o vetor por ordem crescente de distancia
 	sort(distancias.begin(),distancias.end());
 
 	for(unsigned int i = 0; i < distancias.size(); i++)

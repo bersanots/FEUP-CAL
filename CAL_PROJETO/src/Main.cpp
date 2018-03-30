@@ -15,7 +15,7 @@ int main()
 {
 
 	///////////////////////////////////////
-	// Zona de inicializa��o do programa //
+	// Zona de inicializacao do programa //
 	///////////////////////////////////////
 
 	mensagemInicial();

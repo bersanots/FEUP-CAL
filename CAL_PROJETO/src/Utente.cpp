@@ -87,7 +87,7 @@ void Utente::updateLocation(int index) {
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "Coordenada inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Coordenada invalida(" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 		catch (OpcaoInvalida<double> &op){
@@ -114,7 +114,7 @@ void Utente::updateLocation(int index) {
 		}
 		catch (OpcaoInvalida<string> &op){
 
-			cout << "Coordenada inv�lida(" << op.opcao << ") ! Tente novamente." << endl;
+			cout << "Coordenada invalida(" << op.opcao << ") ! Tente novamente." << endl;
 			cin.clear();
 		}
 		catch (OpcaoInvalida<double> &op){
