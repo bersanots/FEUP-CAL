@@ -1,0 +1,34 @@
+35078500;Rua Doutor Manuel Pereira da Silva;True
+35078501;Rua do Doutor Manuel Laranjeira;True
+35105021;Rua do Guadiana;True
+35145521;Rua do Doutor Roberto Frias;True
+35997812;Rua do Mondego;True
+37141983;Rua do Actor Eduardo Brazão;True
+37141985;Rua do Corgo;True
+37937529;Rua do Tejo;True
+37937530;Rua do Tâmega;True
+37937531;Rua do Côa;True
+37937532;Rua do Águeda;True
+37937534;Rua do Sado;True
+106334856;Rua António Salgado Júnior;True
+106334858;Praça do Cávado;True
+106334859;Rua do Neiva;True
+106334860;Rua do Vouga;True
+106334863;Rua do Zêzere;True
+197100020;Rua do Tua;True
+238249552;;True
+238249556;;True
+238249557;;True
+448568790;;True
+448568795;;True
+448568798;;True
+461135460;;True
+461135462;;True
+461135463;;True
+461135464;;True
+461135465;;True
+461925685;Rua do Liz;True
+461925689;Rua do Actor Ferreira da Silva;True
+463835631;;True
+463835633;;True
+463835634;;True
