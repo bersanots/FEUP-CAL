@@ -1,6 +1,6 @@
 #include "Sistema.h"
 
-int Utente::lastId = 0;
+int Utente::lastId{0};
 
 
 ///////////////////////
@@ -67,8 +67,8 @@ void Utente::updateLocation(int index) {
 
 	cout << "Indique as novas coordenadas GPS:" << endl;
 
-	string option;
-	double coordX, coordY;
+	string option{};
+	double coordX{}, coordY{};
 
 	while(1)
 	{
@@ -109,7 +109,7 @@ void Utente::updateLocation(int index) {
 			coordY = stod(option);
 
 			if((coordX < -180) || (coordX > 180))
-					throw OpcaoInvalida<double>(coordY);
+				throw OpcaoInvalida<double>(coordY);
 			break;
 		}
 		catch (OpcaoInvalida<string> &op){
@@ -253,5 +253,15 @@ void Utente::addUse(Utilizacao ut){
 }
 
 void Utente::displayHistoric(){
+	if(historico.empty())
+		cout << "Este utente ainda nao utilizou o servico" << endl << endl;
+	else {
+		cout << "Historico: " << endl << endl;
 
+		for(unsigned int i = 0; i < historico.size(); i++)
+		{
+			historico.at(i).displayUtilizacao();
+			cout << endl;
+		}
+	}
 }

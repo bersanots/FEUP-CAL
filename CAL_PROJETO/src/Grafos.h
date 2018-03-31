@@ -199,8 +199,8 @@ vector<T> Graph<T>::dfs() const {
 	for (auto v : vertexSet)
 		v->visited = false;
 	for (auto v : vertexSet)
-	    if (! v->visited)
-	    	dfsVisit(v, res);
+		if (! v->visited)
+			dfsVisit(v, res);
 	return res;
 }
 
@@ -214,8 +214,8 @@ void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> & res) const {
 	res.push_back(v->info);
 	for (auto & e : v->adj) {
 		auto w = e.dest;
-	    if ( ! w->visited)
-	    	dfsVisit(w, res);
+		if ( ! w->visited)
+			dfsVisit(w, res);
 	}
 }
 
@@ -244,10 +244,10 @@ vector<T> Graph<T>::bfs(const T & source) const {
 		res.push_back(v->info);
 		for (auto & e : v->adj) {
 			auto w = e.dest;
-		    if ( ! w->visited ) {
+			if ( ! w->visited ) {
 				q.push(w);
 				w->visited = true;
-		    }
+			}
 		}
 	}
 	return res;
@@ -311,7 +311,7 @@ template <class T>
 int Graph<T>::maxNewChildren(const T & source, T &inf) const {
 	auto s = findVertex(source);
 	if (s == NULL)
-			return 0;
+		return 0;
 	queue<Vertex<T> *> q;
 	int maxChildren = 0;
 	inf = s->info;
@@ -356,9 +356,9 @@ bool Graph<T>::isDAG() const {
 		v->processing = false;
 	}
 	for (auto v : vertexSet)
-	    if (! v->visited)
-	    	if ( ! dfsIsDAG(v) )
-	    		return false;
+		if (! v->visited)
+			if ( ! dfsIsDAG(v) )
+				return false;
 	return true;
 }
 
@@ -372,11 +372,11 @@ bool Graph<T>::dfsIsDAG(Vertex<T> *v) const {
 	v->processing = true;
 	for (auto & e : v->adj) {
 		auto w = e.dest;
-    	if (w->processing)
-    		return false;
-	    if (! w->visited)
-	    	if (! dfsIsDAG(w))
-	    		return false;
+		if (w->processing)
+			return false;
+		if (! w->visited)
+			if (! dfsIsDAG(w))
+				return false;
 	}
 	v->processing = false;
 	return true;
@@ -384,142 +384,142 @@ bool Graph<T>::dfsIsDAG(Vertex<T> *v) const {
 }
 
 
-	/**
-	* Initializes single-source shortest path data (path, dist).
-	* Receives the content of the source vertex and returns a pointer to the source vertex.
-	* Used by all single-source shortest path algorithms.
-	*/
-	template<class T>
-	Vertex<T> * Graph<T>::initSingleSource(const T &origin) {
-		for (auto v : vertexSet) {
-			v->dist = INF;
-			v->path = nullptr;
-		}
-		auto s = findVertex(origin);
-		s->dist = 0;
-		return s;
+/**
+ * Initializes single-source shortest path data (path, dist).
+ * Receives the content of the source vertex and returns a pointer to the source vertex.
+ * Used by all single-source shortest path algorithms.
+ */
+template<class T>
+Vertex<T> * Graph<T>::initSingleSource(const T &origin) {
+	for (auto v : vertexSet) {
+		v->dist = INF;
+		v->path = nullptr;
 	}
-	/**
-	* Analyzes an edge in single-source shortest path algorithm.
-	* Returns true if the target vertex was relaxed (dist, path).
-	* Used by all single-source shortest path algorithms.
-	*/
-	template<class T>
-	bool Graph<T>::relax(Vertex<T> *v, Vertex<T> *w, double weight) {
-		if (v->dist + weight < w->dist) {
-			w->dist = v->dist + weight;
-			w->path = v;
-			return true;
-		}
-		else
-			return false;
+	auto s = findVertex(origin);
+	s->dist = 0;
+	return s;
+}
+/**
+ * Analyzes an edge in single-source shortest path algorithm.
+ * Returns true if the target vertex was relaxed (dist, path).
+ * Used by all single-source shortest path algorithms.
+ */
+template<class T>
+bool Graph<T>::relax(Vertex<T> *v, Vertex<T> *w, double weight) {
+	if (v->dist + weight < w->dist) {
+		w->dist = v->dist + weight;
+		w->path = v;
+		return true;
+	}
+	else
+		return false;
 }
 
 
-		/**
-		* Dijkstra algorithm.
-		*/
-	template<class T>
-	void Graph<T>::dijkstraShortestPath(const T &origin) {
-		auto s = initSingleSource(origin);
-		MutablePriorityQueue<Vertex<T>> q;
-		q.insert(s);
-		while ( ! q.empty() ) {
-			auto v = q.extractMin();
-			for (auto e : v->adj) {
-				auto oldDist = e.dest->dist;
-				if (relax(v, e.dest, e.weight)) {
-					if (oldDist == INF)
-						q.insert(e.dest);
-					else
-						q.decreaseKey(e.dest);
-				}
+/**
+ * Dijkstra algorithm.
+ */
+template<class T>
+void Graph<T>::dijkstraShortestPath(const T &origin) {
+	auto s = initSingleSource(origin);
+	MutablePriorityQueue<Vertex<T>> q;
+	q.insert(s);
+	while ( ! q.empty() ) {
+		auto v = q.extractMin();
+		for (auto e : v->adj) {
+			auto oldDist = e.dest->dist;
+			if (relax(v, e.dest, e.weight)) {
+				if (oldDist == INF)
+					q.insert(e.dest);
+				else
+					q.decreaseKey(e.dest);
 			}
 		}
 	}
+}
 
 
-	template<class T>
-	vector<T> Graph<T>::getPath(const T &origin, const T &dest) const {
-		vector<T> res;
-		auto v = findVertex(dest);
-		if (v == nullptr || v->dist == INF) // missing or disconnected
-			return res;
-		for ( ; v != nullptr; v = v->path)
-			res.push_back(v->info);
-		reverse(res.begin(), res.end());
+template<class T>
+vector<T> Graph<T>::getPath(const T &origin, const T &dest) const {
+	vector<T> res;
+	auto v = findVertex(dest);
+	if (v == nullptr || v->dist == INF) // missing or disconnected
 		return res;
-	}
+	for ( ; v != nullptr; v = v->path)
+		res.push_back(v->info);
+	reverse(res.begin(), res.end());
+	return res;
+}
 
-	// To do the bidirectional Dijkstra algorith i have the check if the vertex are intersecting
+// To do the bidirectional Dijkstra algorith i have the check if the vertex are intersecting
 
-	int Graph<T>::isIntersecting(bool *s_visited, bool *t_visited){
-	 int intersectNode = -1;
-	    for(int i=0;i<vertexSet.size();i++)
-	    {
-	        // if a vertex is visited by both front
-	        // and back BFS search return that node
-	        // else return -1
-	        if(s_visited[i] && t_visited[i])
-	            return i;
-	    }
-	    return -1;
-	}
-
-	// Method for bidirectional searching
-	bool Graph::biDirSearch(int s, int t)
+int Graph<T>::isIntersecting(bool *s_visited, bool *t_visited){
+	int intersectNode = -1;
+	for(int i=0;i<vertexSet.size();i++)
 	{
-	    // boolean array for BFS started from
-	    // source and target(front and backward BFS)
-	    // for keeping track on visited nodes
-	    bool s_visited[vertexSet.size()], t_visited[vertexSet.size()];
-
-	    // Keep track on parents of nodes
-	    // for front and backward search
-	    int s_parent[vertexSet.size()], t_parent[vertexSet.size()];
-
-	    // queue for front and backward search
-	    list<int> s_queue, t_queue;
-
-	    int intersectNode = -1;
-
-	    // necessary initialization
-	    for(int i=0; i<vertexSet.size(); i++)
-	    {
-	        s_visited[i] = false;
-	        t_visited[i] = false;
-	    }
-
-	    s_queue.push_back(s);
-	    s_visited[s] = true;
-
-	    // parent of source is set to -1
-	    s_parent[s]=-1;
-
-	    t_queue.push_back(t);
-	    t_visited[t] = true;
-
-	    // parent of target is set to -1
-	    t_parent[t] = -1;
-
-	    while (!s_queue.empty() && !t_queue.empty())
-	    {
-	        // Do BFS from source and target vertices
-	        bfs(&s_queue);
-	        bfs(&t_queue);
-
-	        // check for intersecting vertex
-	        intersectNode = isIntersecting(s_visited, t_visited);
-
-	        // If intersecting vertex is found
-	        // that means there exist a path
-	        if(intersectNode != -1)
-	        {
-	            return true;
-	        }
-	    }
-	    return false;
+		// if a vertex is visited by both front
+		// and back BFS search return that node
+		// else return -1
+		if(s_visited[i] && t_visited[i])
+			return i;
 	}
+	return -1;
+}
+
+// Method for bidirectional searching
+bool Graph::biDirSearch(int s, int t)
+{
+	// boolean array for BFS started from
+	// source and target(front and backward BFS)
+	// for keeping track on visited nodes
+	bool s_visited[vertexSet.size()], t_visited[vertexSet.size()];
+
+	// Keep track on parents of nodes
+	// for front and backward search
+	int s_parent[vertexSet.size()], t_parent[vertexSet.size()];
+
+	// queue for front and backward search
+	list<int> s_queue, t_queue;
+
+	int intersectNode = -1;
+
+	// necessary initialization
+	for(int i=0; i<vertexSet.size(); i++)
+	{
+		s_visited[i] = false;
+		t_visited[i] = false;
+	}
+
+	s_queue.push_back(s);
+	s_visited[s] = true;
+
+	// parent of source is set to -1
+	s_parent[s]=-1;
+
+	t_queue.push_back(t);
+	t_visited[t] = true;
+
+	// parent of target is set to -1
+	t_parent[t] = -1;
+
+	while (!s_queue.empty() && !t_queue.empty())
+	{
+		// Do BFS from source and target vertices
+		bfs(&s_queue);
+		bfs(&t_queue);
+
+		// check for intersecting vertex
+		intersectNode = isIntersecting(s_visited, t_visited);
+
+		// If intersecting vertex is found
+		// that means there exist a path
+		if(intersectNode != -1)
+		{
+			return true;
+		}
+	}
+	return false;
+}
 
 
 

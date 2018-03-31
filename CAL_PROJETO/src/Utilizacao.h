@@ -37,7 +37,7 @@ inline ostream & operator<< (ostream & o, const Data & d){
  */
 inline istream & operator>> (istream & i, Data & d)
 {
-	char b1, b2;
+	char b1{}, b2{};
 	return i >> d.dia >> b1 >> d.mes >> b2 >> d.ano;
 }
 
@@ -46,18 +46,21 @@ class Utilizacao {
 private:
 	Data data;				/**< Data da respetiva utilizacao.*/
 	unsigned int useTime;	/**< Numero de horas de uso da bicicleta.*/
-	string bikeType;		/**< Tipo de bicicleta.*/
 	string pontoPartilha;	/**< Nome do ponto de partilha onde a bicicleta foi alugada.*/
-	string localizacao;		/**< Nome da localizacao do ponto de partilha onde a bicicleta foi alugada.*/
 public:
 	Utilizacao();			/**< Necessario para o overload do operador de extracao na classe utente*/
-	Utilizacao(string bikeType, unsigned int numHours, Data d, string pp, string loc);
+	Utilizacao(unsigned int numHours, Data d, string pp);
 
 	//Metodos Get
 	Data getData() const;
 	unsigned int getUseTime() const;
-	string getBikeType() const;
+	string getPPName() const;
 	double getPrice() const;
+
+	//Metodos Set
+	void setData(Data d);
+	void setUseTime(unsigned int time);
+	void setPPName(string name);
 
 	//Others
 	void displayUtilizacao() const;
@@ -73,7 +76,7 @@ public:
  */
 inline ostream& operator <<(ostream & o, const Utilizacao & u)
 {
-	o << u.bikeType << '-' <<  u.pontoPartilha << '-' <<  u.localizacao << '-' << u.useTime << '-' <<  u.data ;
+	o << u.getPPName() << '-' << u.getUseTime() << '-' <<  u.getData();
 	return o;
 }
 
@@ -82,10 +85,14 @@ inline ostream& operator <<(ostream & o, const Utilizacao & u)
  * de modo a recriar o sistema da ultima execucao.
  */
 inline istream& operator >>(istream & i, Utilizacao & u) {
-	char b1;
-	getline(i,u.bikeType,'-');
-	getline(i,u.pontoPartilha,'-');
-	getline(i,u.localizacao,'-');
-	i >> u.useTime >> b1 >> u.data;
+	char b1{};
+	string str{};
+	unsigned int n{};
+	Data d{};
+	getline(i,str,'-');
+	i >> n >> b1 >> d;
+	u.setPPName(str);
+	u.setUseTime(n);
+	u.setData(d);
 	return i;
 }

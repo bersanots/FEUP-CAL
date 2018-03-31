@@ -17,7 +17,7 @@ protected:
 	bool disponivel = true;			/**< Se o utente esta a usar uma bicicleta disponivel = false, caso contrario disponivel = true. */
 public:
 	Utente();
-	explicit Utente(string nome, Localizacao spot);
+	Utente(string nome, Localizacao spot);
 
 	//Metodos Get
 	static int getLastId();
@@ -52,15 +52,16 @@ public:
 
 
 };
-/*
+
 
 /**
  * Overload do operador de insercao usado para escrever os objetos do tipo Regular nos ficheiros,
  * de modo a guardar a informacao do sistema.
+ */
 
-inline ostream& operator <<(ostream & o, const Utente & u)
+inline ostream& operator <<(ostream & o, Utente u)
 {
-	o << 'R' << ',' <<  u.getNome() << ',' << u.getLocalizacao() << ',' ;
+	o << u.getNome() << ',' << u.getLocalizacao() << ',' ;
 
 	o << u.getHistorico().size() << ',' ;
 	for (unsigned int k=0 ; k< u.getHistorico().size() ; k++){
@@ -73,23 +74,25 @@ inline ostream& operator <<(ostream & o, const Utente & u)
 /**
  * Overload do operador de extracao usado para recolher dos ficheiros os objetos do tipo Regular,
  * de modo a recriar o sistema da ultima execucao.
+ */
 
 inline istream& operator >>(istream & i, Utente & u) {
-	char b2, b3, b4;
-	unsigned int hist;
-	Utilizacao ut;
-	string str, str2;
+	char b2{}, b3{}, b4{};
+	unsigned int hist{};
+	Utilizacao ut{};
+	Localizacao loc{};
+	string str{}, str2{};
+
 	getline(i,str,',');
 	u.setNome(str);
-	i >> u.getLocal() >> b2 >> hist >> b3;
-	u.setLocal
+	i >> loc >> b2 >> hist >> b3;
+	u.setUtenteLocation(loc);
 
 	for(unsigned int k=0 ; k < hist ; k++){
 		i >> ut >> b4;
-		u.getHistorico().push_back(ut);
+		u.addUse(ut);
 	}
 
 	return i;
 }
-*/
 

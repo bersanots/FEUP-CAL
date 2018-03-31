@@ -18,8 +18,8 @@
 #include <fstream>
 //#include <conio.h>
 
-
 using namespace std;
+
 
 //Prototipos
 bool valid_word(string word);

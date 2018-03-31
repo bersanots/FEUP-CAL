@@ -8,7 +8,7 @@
 class PontoPartilha {
 	Localizacao local;							/**< Localizacao do ponto de partilha. */
 	unsigned int capacidade;					/**< Capacidade do ponto de partilha. */
-	vector <vector<Bicicleta *> > bicicletas;	/**< Bicicletas existentes no ponto de partilha. */
+	vector<Bicicleta*> bicicletas;				/**< Bicicletas existentes no ponto de partilha. */
 	string nome;								/**< Nome do ponto de partilha. */
 public:
 	PontoPartilha();	/**< Necessario para o overload do operador de extracao na classe utente.*/
@@ -17,13 +17,13 @@ public:
 	//Metodos Get
 	Localizacao getLocal() const;
 	string getNome() const;
-	int getCapacidade() const;
-	vector<int> getNumberOfBikes() const;
-	vector <string> getBikeTypes();
-	vector <vector<Bicicleta *> > getBikes() const;
+	unsigned int getCapacidade() const;
+	vector<Bicicleta*> getBikes() const;
 
 	//Metodos Set
+	void setLocal(Localizacao loc);
 	void setNome(string name);
+	void setCapacidade(unsigned int cap);
 
 	//Others
 	void limpaVectorBike();
@@ -39,8 +39,7 @@ public:
  */
 inline ostream& operator <<(ostream & o, const PontoPartilha & p)
 {
-	o << p.nome << '/' << p.local << '/' << p.capacidade << '[' << p.bicicletas.at(0).size() << ','
-			<< p.bicicletas.at(1).size() << ',' << p.bicicletas.at(2).size() << ',' << p.bicicletas.at(3).size() << ']';
+	o << p.getNome() << '/' << p.getLocal() << '/' << p.getCapacidade() << '/' << p.getBikes().size();
 	return o;
 }
 
@@ -48,32 +47,27 @@ inline ostream& operator <<(ostream & o, const PontoPartilha & p)
  * Overload do operador de extracao usado para recolher dos ficheiros os objetos do tipo PontoPartilha,
  * de modo a recriar o sistema da ultima execucao.
  */
-/*
+
 inline istream& operator >>(istream & i, PontoPartilha & p)
 {
-	char b1, b2, b3, b4, b5, b6;
-	unsigned int u,uc,c,inf; //4 tipos de bicicletas
-	vector<Bicicleta *> v1,v2,v3,v4;
-	vector <vector<Bicicleta *> > bikes{v1,v2,v3,v4};
+	string str{};
+	Localizacao loc{};
+	unsigned int n1{}, n2{};
+	char b1{}, b2{};
 
-	Bicicleta * b; //apontador generico apenas para reservar espaco no vetor
+	Bicicleta * b = new Bicicleta{}; //apontador generico apenas para reservar espaco no vetor
 
-	getline(i,p.nome,'/');
-	i >> p.local >> b1 >> p.capacidade >> b2 >> u >> b3 >> uc >> b4 >> c >> b5 >> inf >> b6;
+	getline(i,str,'-');
+	p.setNome(str);
 
-	for (unsigned int k=0 ; k<u ; k++){
-		bikes.at(0).push_back(b);
-	}
-	for (unsigned int k=0 ; k<uc ; k++){
-		bikes.at(1).push_back(b);
-	}
-	for (unsigned int k=0 ; k<c ; k++){
-		bikes.at(2).push_back(b);
-	}
-	for (unsigned int k=0 ; k<inf ; k++){
-		bikes.at(3).push_back(b);
+	i >> loc >> b1 >> n1 >> b2 >> n2;
+	p.setLocal(loc);
+	p.setCapacidade(n1);
+
+	p.limpaVectorBike();
+	for (unsigned int k=0 ; k<n2 ; k++){
+		p.adicionaBike(b);
 	}
 
-	p.bicicletas=bikes;
 	return i;
-}*/
+}

@@ -1,7 +1,7 @@
 /*
  * Algorithms.h
 
-*/
+ */
 
 //Desenvolver algoritmo de Dijkstra Bidirecional para encontrar ponto mais proximo
 

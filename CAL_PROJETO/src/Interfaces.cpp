@@ -95,10 +95,10 @@ void menu_interface(Sistema &ER){
 
 	mensagemInicial();
 
-	int attempts=0;
-	int identificacao;
-	int index;	//Indice do utente no vector de utentes do sistema
-	string info;
+	int attempts{0};
+	int identificacao{};
+	int index{};	//Indice do utente no vector de utentes do sistema
+	string info{};
 
 	cout << "Utentes: " << endl << endl;
 
@@ -149,8 +149,8 @@ void menu_interface(Sistema &ER){
 
 	Utente* utente = ER.getUtentes().at(index);
 
-	string option;
-	int value;
+	string option{};
+	int value{};
 
 	do
 	{
@@ -256,8 +256,8 @@ void admin_interface(Sistema &ER) {
 
 	mensagemInicial();
 
-	int attempts=0;
-	string info;
+	int attempts{0};
+	string info{};
 
 	while(attempts < 3)
 	{
@@ -292,8 +292,8 @@ void admin_interface(Sistema &ER) {
 
 	system("cls");
 
-	string option;
-	int value;
+	string option{};
+	int value{};
 
 	do
 	{
@@ -365,8 +365,8 @@ void admin_interface(Sistema &ER) {
  */
 void openInterface(Sistema & ER){
 
-	int value;
-	string option;
+	int value{};
+	string option{};
 
 	do
 	{
