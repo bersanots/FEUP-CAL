@@ -5,10 +5,15 @@
 #include "Utente.h"
 #include "PontoPartilha.h"
 #include "Localizacao.h"
+#include "Grafos.h"
 
 class Sistema {
 	vector<PontoPartilha* > pontosPartilha;		/**< Pontos de partilha referentes ao sistema. */
 	vector<Utente* > utentes;					/**< Utentes referentes ao sistema. */
+	Graph<Node> grafo;
+	vector<Node> nos;
+	vector<Street> estradas;
+
 public:
 	/**
 	 *  Construtor padrao da classe Sistema

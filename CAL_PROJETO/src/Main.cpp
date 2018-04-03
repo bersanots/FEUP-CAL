@@ -93,6 +93,31 @@ void checkinSys(Sistema & ER){
 
 	f_pontos_partilha.close();
 
+	/*ifstream f_nodes{};
+
+		try{
+			f_nodes.open("nodes.txt");
+			if (!f_pontos_partilha.is_open())
+				throw AberturaFalhada<string>("nodes.txt");
+		}
+		catch (AberturaFalhada<string> &a){
+			cout << "Falha ao abrir o ficheiro " << a.getFicheiro() << "." << endl;
+			cout << "Tente mais tarde.\n";
+			return;
+		}
+
+		while(!f_nodes.eof()){
+			getline(f_nodes,f_line);
+			if (f_line != ""){
+				ss << f_line;
+				Node *node = new Node{};
+				ss >> *node;
+				ER.addNode(node);
+			}
+		}
+
+		f_nodes.close();*/
+
 	return;
 };
 

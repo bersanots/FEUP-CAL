@@ -39,7 +39,7 @@ public:
  */
 inline ostream& operator <<(ostream & o, const PontoPartilha & p)
 {
-	o << p.getNome() << '/' << p.getLocal() << '/' << p.getCapacidade() << '/' << p.getBikes().size();
+	o << p.getNome() << '/' << p.getLocal() << '/' << p.getCapacidade() << '/' << p.getBikes().size() << '/';
 	return o;
 }
 
@@ -53,14 +53,14 @@ inline istream& operator >>(istream & i, PontoPartilha & p)
 	string str{};
 	Localizacao loc{};
 	unsigned int n1{}, n2{};
-	char b1{}, b2{};
+	char b1{}, b2{}, b3{};
 
 	Bicicleta * b = new Bicicleta{}; //apontador generico apenas para reservar espaco no vetor
 
-	getline(i,str,'-');
+	getline(i,str,'/');
 	p.setNome(str);
 
-	i >> loc >> b1 >> n1 >> b2 >> n2;
+	i >> loc >> b1 >> n1 >> b2 >> n2 >> b3;
 	p.setLocal(loc);
 	p.setCapacidade(n1);
 

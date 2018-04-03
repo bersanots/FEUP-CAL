@@ -623,13 +623,10 @@ void Sistema::getInfo() const {
 	cout << "Nome da empresa: ECO RIDES" << endl << endl;
 	cout << "Numero total de pontos de Partilha: " << pontosPartilha.size() << endl << endl;
 	cout << "Pontos de Partilha:" << endl << endl;
-	cout << setw (20) << left << "Nome" << setw (22) << "Local" << setw (13) << "GPS";
-	cout << setw (10) << "Urbana" << setw (18) << "Urbana Simples" <<
-			setw (9) << "Corrida" << setw(10) << "Infantil" << "Capacidade" << endl;
+	cout << setw (20) << left << "Nome" << setw (13) << "GPS" << setw (10) << "Capacidade" << endl;
 
 	for (unsigned int i=0 ; i<pontosPartilha.size() ; i++){
 		cout << setw(10) << pontosPartilha.at(i)->getNome();
-		cout << setw(23) << pontosPartilha.at(i)->getLocal().getNome();
 		cout << '(' << setw(9) << pontosPartilha.at(i)->getLocal().getX();
 		cout << "," << setw(9) << pontosPartilha.at(i)->getLocal().getY() << setw(5) << ')';
 
