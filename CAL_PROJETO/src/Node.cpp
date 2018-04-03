@@ -4,11 +4,10 @@ Node::Node() {
 	this->id = 0;
 }
 
-Node::Node(int id, int x, int y, string name) {
+Node::Node(int id, double lon, double lat) {
 	this->id = id;
-	this->coords.first = x;
-	this->coords.second = y;
-	this->name = name;
+	Localizacao loc(lon,lat);
+	this->coords = loc;
 }
 
 Node::~Node() {
@@ -18,20 +17,20 @@ void Node::setID(int id) {
 	this->id = id;
 }
 
+void Node::setLocation(Localizacao loc){
+	this->coords = loc;
+}
+
 int Node::getID() const {
 	return this->id;
 }
 
-int Node::getX() const {
-	return this->coords.first;
+double Node::getLongitude() const {
+	return this->coords.getX();
 }
 
-int Node::getY() const {
-	return this->coords.second;
-}
-
-string Node::getName() const {
-	return this->name;
+double Node::getLatitude() const {
+	return this->coords.getY();
 }
 
 bool Node::operator ==(const Node &n2) const {

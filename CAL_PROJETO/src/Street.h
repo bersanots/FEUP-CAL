@@ -11,17 +11,45 @@ class Street {
 private:
 	int id;
 	string name;
-	vector<Vertex<Node>*> vertexs;
+	vector<Vertex<Node>*> vertices;
 	bool twoWays;
-	string location;
 
 public:
 	Street();
 	~Street();
-	Street(int id, string name, vector<Vertex<Node>*> vertexs, int way);
-	int getID();
-	string getName();
-	vector<Vertex<Node>*> getVertexs();
-	bool isTwoWays();
-	string getLocation();
+	Street(int id, string name, vector<Vertex<Node>*> vertices, bool twoWays);
+	int getID() const;
+	string getName() const;
+	vector<Vertex<Node>*> getVertices() const;
+	void setID(int id);
+	void setName(string name);
+	void setTwoWays(bool value);
+	void addVertex(Vertex<Node>* no);
+	bool isTwoWays() const;
 };
+
+
+inline ostream& operator <<(ostream & o, Street st)
+{
+	o << st.getID() << ';' << st.getName() << ';' << st.isTwoWays() << ';';
+	return o;
+}
+
+
+inline istream& operator >>(istream & i, Street & st) {
+	char b{};
+	string str{};
+	bool val{};
+	unsigned int id{};
+
+	i >> id >> b;
+	st.setID(id);
+
+	getline(i,str,';');
+	st.setName(str);
+
+	i >> val >> b;
+	st.setTwoWays(val);
+
+	return i;
+}

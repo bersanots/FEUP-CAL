@@ -4,7 +4,6 @@
  * Construtor padrao da classe Lcalizacao.
  */
 Localizacao::Localizacao(){
-	this->nome = "";
 	this->x = 0.0;
 	this->y = 0.0;
 }
@@ -15,33 +14,14 @@ Localizacao::Localizacao(){
  * @param y coordenada y da localizacao
  */
 Localizacao::Localizacao(double x, double y) {
-	this->nome = "";
 	this->x = x;
 	this->y = y;
 }
 
-/**
- * Construtor da classe Localizacao.
- * @param nome nome da localizacao
- * @param x coordenada x da localizacao
- * @param y coordenada y da localizacao
- */
-Localizacao::Localizacao(string nome, double x, double y){
-	this->nome = nome;
-	this->x = x;
-	this->y = y;
-}
 
 /////////////////
 // METODOS GET //
 /////////////////
-
-/**
- * @return Retorna o nome da localizacao.
- */
-string Localizacao::getNome() const{
-	return nome;
-}
 
 /**
  * @return Retorna coordenada x da localizacao.
@@ -61,14 +41,6 @@ double Localizacao::getY() const{
 /////////////////
 // METODOS SET //
 /////////////////
-
-/**
- * Altera o nome da localizacao.
- * @param nome novo nome
- */
-void Localizacao::setNome(string nome) {
-	this->nome = nome;
-}
 
 /**
  * Altera a coordenada x da localizacao.
@@ -94,7 +66,6 @@ void Localizacao::setY(double y) {
  * Construtor de copia.
  */
 Localizacao & Localizacao::operator =(Localizacao & l) {
-	setNome(l.nome);
 	setX(l.x);
 	setY(l.y);
 	return *this;

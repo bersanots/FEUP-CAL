@@ -9,11 +9,15 @@
 
 #include <vector>
 #include <queue>
+#include <limits>
+#include "MutablePriorityQueue.h"
 using namespace std;
 
 template <class T> class Edge;
 template <class T> class Graph;
 template <class T> class Vertex;
+
+#define INF std::numeric_limits<double>::max()
 
 
 /****************** Provided structures  ********************/
@@ -65,7 +69,7 @@ public:
 	bool relax(Vertex<T> *v, Vertex<T> *w, double weight);
 	void dijkstraShortestPath(const T &origin);
 	vector<T> getPath(const T &origin, const T &dest) const;
-	bool biDirSearch(int s, int t)
+	//bool biDirSearch(int s, int t)
 
 };
 
@@ -452,7 +456,7 @@ vector<T> Graph<T>::getPath(const T &origin, const T &dest) const {
 }
 
 // To do the bidirectional Dijkstra algorith i have the check if the vertex are intersecting
-
+/*
 int Graph<T>::isIntersecting(bool *s_visited, bool *t_visited){
 	int intersectNode = -1;
 	for(int i=0;i<vertexSet.size();i++)
@@ -505,7 +509,7 @@ bool Graph::biDirSearch(int s, int t)
 	while (!s_queue.empty() && !t_queue.empty())
 	{
 		// Do BFS from source and target vertices
-		bfs(&s_queue);
+		//bfs(&s_queue);
 		bfs(&t_queue);
 
 		// check for intersecting vertex
@@ -519,7 +523,7 @@ bool Graph::biDirSearch(int s, int t)
 		}
 	}
 	return false;
-}
+}*/
 
 
 

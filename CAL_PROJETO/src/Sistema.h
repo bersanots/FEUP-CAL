@@ -6,6 +6,8 @@
 #include "PontoPartilha.h"
 #include "Localizacao.h"
 #include "Grafos.h"
+#include "Node.h"
+#include "Street.h"
 
 class Sistema {
 	vector<PontoPartilha* > pontosPartilha;		/**< Pontos de partilha referentes ao sistema. */
@@ -26,6 +28,8 @@ public:
 	void adicionaBike();
 	void addNewUtente(Utente* u1);				/**< Necessario para inclusao direta no sistema dos utente extraidos do ficheiro.*/
 	void addPontoPartilha(PontoPartilha* p);	/**< Necessario para inclusao direta no sistema dos pontos de partilha extraidos do ficheiro.*/
+	void addNode(Node n);
+	void addStreet(Street st);
 
 	//Metodos remove
 	void removePonto();
@@ -35,6 +39,8 @@ public:
 	//Metodos Get
 	vector<Utente* > getUtentes() const;
 	vector<PontoPartilha* > getPontosPartilha() const;
+	vector<Node> getNodes() const;
+	vector<Street> getStreets() const;
 	void getInfo() const;
 	vector<int> getOrderedPP(int index) const;
 	int getUtenteIndex(int identificacao) const;

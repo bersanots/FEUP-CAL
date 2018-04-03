@@ -93,30 +93,69 @@ void checkinSys(Sistema & ER){
 
 	f_pontos_partilha.close();
 
-	/*ifstream f_nodes{};
+	ifstream f_nodes{};
 
-		try{
-			f_nodes.open("nodes.txt");
-			if (!f_pontos_partilha.is_open())
-				throw AberturaFalhada<string>("nodes.txt");
-		}
-		catch (AberturaFalhada<string> &a){
-			cout << "Falha ao abrir o ficheiro " << a.getFicheiro() << "." << endl;
-			cout << "Tente mais tarde.\n";
-			return;
-		}
+	try{
+		f_nodes.open("nodes.txt");
+		if (!f_nodes.is_open())
+			throw AberturaFalhada<string>("nodes.txt");
+	}
+	catch (AberturaFalhada<string> &a){
+		cout << "Falha ao abrir o ficheiro " << a.getFicheiro() << "." << endl;
+		cout << "Tente mais tarde.\n";
+		return;
+	}
 
-		while(!f_nodes.eof()){
-			getline(f_nodes,f_line);
-			if (f_line != ""){
-				ss << f_line;
-				Node *node = new Node{};
-				ss >> *node;
-				ER.addNode(node);
-			}
+	while(!f_nodes.eof()){
+		getline(f_nodes,f_line);
+		if (f_line != ""){
+			ss << f_line;
+			Node node{};
+			ss >> node;
+			ER.addNode(node);
+			cout << node << endl;
 		}
+	}
 
-		f_nodes.close();*/
+	f_nodes.close();
+
+	ifstream f_streets{};
+	ifstream f_connects{};
+
+	try{
+		f_streets.open("roads.txt");
+		if (!f_streets.is_open())
+			throw AberturaFalhada<string>("roads.txt");
+	}
+	catch (AberturaFalhada<string> &a){
+		cout << "Falha ao abrir o ficheiro " << a.getFicheiro() << "." << endl;
+		cout << "Tente mais tarde.\n";
+		return;
+	}
+
+	try{
+		f_connects.open("subroads.txt");
+		if (!f_connects.is_open())
+			throw AberturaFalhada<string>("subroads.txt");
+	}
+	catch (AberturaFalhada<string> &a){
+		cout << "Falha ao abrir o ficheiro " << a.getFicheiro() << "." << endl;
+		cout << "Tente mais tarde.\n";
+		return;
+	}
+
+	while(!f_streets.eof()){
+		getline(f_streets,f_line);
+		if (f_line != ""){
+			ss << f_line;
+			Street street{};
+			ss >> street;
+			ER.addStreet(street);
+			cout << street << endl;
+		}
+	}
+
+	f_streets.close();
 
 	return;
 };

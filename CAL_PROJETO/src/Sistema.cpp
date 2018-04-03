@@ -128,14 +128,13 @@ void Sistema::addPontoPartilha() {
 			if((loc.getX() == coordX) && (loc.getY() == coordY))
 			{
 				newcord = false;
-				cout << "Essas coordenadas ja pertencem a localizacao: " << loc.getNome() << endl << endl;
+				cout << "Ja existe um Ponto de Partilha nessa localizacao!" << endl << endl;
 				break;
 			}
 		}
 
 	}while(newcord == false);
 
-	spot.setNome(locname);
 	spot.setX(coordX);
 	spot.setY(coordY);
 
@@ -270,17 +269,6 @@ void Sistema::addNewUtente() {
 
 	Localizacao spot{};
 
-	for(unsigned int i = 0; i < pontosPartilha.size(); i++)
-	{
-		Localizacao loc = pontosPartilha.at(i)->getLocal();
-
-		if((loc.getX() == coordX) && (loc.getY() == coordY))
-		{
-			spot.setNome(loc.getNome());
-			break;
-		}
-	}
-
 	spot.setX(coordX);
 	spot.setY(coordY);
 
@@ -384,6 +372,16 @@ void Sistema::addNewUtente(Utente* u1){
 void Sistema::addPontoPartilha(PontoPartilha* p){
 	pontosPartilha.push_back(p);
 }
+
+void Sistema::addNode(Node n){
+	nos.push_back(n);
+}
+
+
+void Sistema::addStreet(Street st){
+	estradas.push_back(st);
+}
+
 
 ////////////////////
 // METODOS REMOVE //
@@ -664,6 +662,14 @@ vector<Utente* > Sistema::getUtentes() const{
  */
 vector<PontoPartilha* > Sistema::getPontosPartilha() const {
 	return pontosPartilha;
+}
+
+vector<Node> Sistema::getNodes() const{
+	return nos;
+}
+
+vector<Street> Sistema::getStreets() const{
+	return estradas;
 }
 
 /**
