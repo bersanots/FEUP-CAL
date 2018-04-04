@@ -24,7 +24,9 @@ int main()
 
 	cout << "APPLICATION LOADING";
 
-	checkinSys(sys) ;
+	checkinSys(sys);
+
+	sys.criarGrafo();
 
 	openInterface(sys);
 
@@ -208,7 +210,7 @@ void checkoutSys(Sistema & ER){
 	}
 
 	for(unsigned int it=0 ; it<ER.getUtentes().size() ; it++){
-		f_utentes << ER.getUtentes().at(it) << endl;
+		f_utentes << *ER.getUtentes().at(it) << endl;
 	}
 
 	f_utentes.close();
@@ -227,7 +229,7 @@ void checkoutSys(Sistema & ER){
 	}
 
 	for(unsigned int it=0 ; it<ER.getPontosPartilha().size() ; it++){
-		f_pontos_partilha << ER.getPontosPartilha().at(it) << endl;
+		f_pontos_partilha << *ER.getPontosPartilha().at(it) << endl;
 	}
 
 	f_pontos_partilha.close();
@@ -278,10 +280,12 @@ void checkoutSys(Sistema & ER){
 
 	for(unsigned int it=0 ; it<ER.getStreets().size() ; it++){
 		f_streets << ER.getStreets().at(it) << endl;
-		f_connections << ER.getStreets().at(it).getID() << ";";
-		for(unsigned int i=0; i<ER.getStreets().at(it).getVertices().size(); i++)
+		for(unsigned int i=0; i<ER.getStreets().at(it).getVertices().size()/2; i++){
+			f_connections << ER.getStreets().at(it).getID() << ";";
 			f_connections << ER.getStreets().at(it).getVertices().at(i)->getInfo().getID() << ";";
-		f_connections << endl;
+			f_connections << ER.getStreets().at(it).getVertices().at(i+1)->getInfo().getID() << ";";
+			f_connections << endl;
+		}
 	}
 
 	f_connections.close();

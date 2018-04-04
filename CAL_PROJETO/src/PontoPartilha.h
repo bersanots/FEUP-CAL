@@ -4,15 +4,17 @@
 #include "Localizacao.h"
 #include "Bicicleta.h"
 #include "Utente.h"
+#include "Node.h"
 
-class PontoPartilha {
-	Localizacao local;							/**< Localizacao do ponto de partilha. */
+class PontoPartilha : public Node{
+	double altitude;
+	float preco;
 	unsigned int capacidade;					/**< Capacidade do ponto de partilha. */
 	vector<Bicicleta*> bicicletas;				/**< Bicicletas existentes no ponto de partilha. */
 	string nome;								/**< Nome do ponto de partilha. */
 public:
 	PontoPartilha();	/**< Necessario para o overload do operador de extracao na classe utente.*/
-	PontoPartilha(Localizacao spot,unsigned int storage,string name);
+	PontoPartilha(long id, double lon, double lat, double alt, unsigned int storage,string name);
 
 	//Metodos Get
 	Localizacao getLocal() const;
@@ -21,9 +23,9 @@ public:
 	vector<Bicicleta*> getBikes() const;
 
 	//Metodos Set
-	void setLocal(Localizacao loc);
 	void setNome(string name);
 	void setCapacidade(unsigned int cap);
+	void setAltitude(double alt);
 
 	//Others
 	void limpaVectorBike();
@@ -52,16 +54,20 @@ inline istream& operator >>(istream & i, PontoPartilha & p)
 {
 	string str{};
 	Localizacao loc{};
+	double alt{};
 	unsigned int n1{}, n2{};
-	char b1{}, b2{}, b3{};
+	long id{};
+	char b1{}, b2{}, b3{}, b4{}, b5{};
 
 	Bicicleta * b = new Bicicleta{}; //apontador generico apenas para reservar espaco no vetor
 
 	getline(i,str,'/');
 	p.setNome(str);
 
-	i >> loc >> b1 >> n1 >> b2 >> n2 >> b3;
-	p.setLocal(loc);
+	i >> id >> b1 >> loc >> b2 >> alt >> b3 >> n1 >> b4 >> n2 >> b5;
+	p.setID(id);
+	p.setLocation(loc);
+	p.setAltitude(alt);
 	p.setCapacidade(n1);
 
 	p.limpaVectorBike();

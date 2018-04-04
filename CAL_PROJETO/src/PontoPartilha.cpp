@@ -3,11 +3,11 @@
 /**
  * Construtor padrao da classe PontoPartilha.
  */
-PontoPartilha::PontoPartilha(){
-	capacidade = 0;
-	nome = "";
-	Localizacao loc{};
-	local = loc;
+PontoPartilha::PontoPartilha() : Node(){
+	this->altitude = 0;
+	this->capacidade = 0;
+	this->preco = 0;
+	this->nome = "";
 }
 
 /**
@@ -16,10 +16,11 @@ PontoPartilha::PontoPartilha(){
  * @param spot localizacao do ponto de partilha
  * @param storage capacidade do ponto de partilha
  */
-PontoPartilha::PontoPartilha(Localizacao spot,unsigned int storage,string name) {
-	local = spot;
-	capacidade = storage;
-	nome = name;
+PontoPartilha::PontoPartilha(long id, double lon, double lat, double alt, unsigned int storage,string name) : Node(id,lon,lat) {
+	this->altitude = alt;
+	this->capacidade = storage;
+	this->preco = 10/alt;
+	this->nome = name;
 }
 
 /**
@@ -66,7 +67,7 @@ string PontoPartilha::getNome() const {
  * @return Retorna a localizacao do ponto de partilha.
  */
 Localizacao PontoPartilha::getLocal() const {
-	return local;
+	return coords;
 }
 
 /**
@@ -93,13 +94,13 @@ vector<Bicicleta *> PontoPartilha::getBikes() const {
  * @param name novo nome
  */
 void PontoPartilha::setNome(string name) {
-	nome = name;
+	this->nome = name;
 }
 
-void PontoPartilha::setLocal(Localizacao loc) {
-	local = loc;
+void PontoPartilha::setAltitude(double alt) {
+	altitude = alt;
 }
 
 void PontoPartilha::setCapacidade(unsigned int cap) {
-	capacidade = cap;
+	this->capacidade = cap;
 }

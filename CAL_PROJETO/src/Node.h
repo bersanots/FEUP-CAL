@@ -2,11 +2,12 @@
 #include <iostream>
 #include <vector>
 #include "Localizacao.h"
+#include "Includes.h"
 
 using namespace std;
 
 class Node {
-private:
+protected:
 	long id;
 	Localizacao coords;
 
@@ -17,8 +18,10 @@ public:
 	long getID() const;
 	double getLongitude() const;
 	double getLatitude() const;
+	double distanceTo(const Node & n2) const;
 	void setID(long ID);
 	void setLocation(Localizacao loc);
+	void operator=(const Node & n2);
 	bool operator==(const Node & n2) const;
 };
 

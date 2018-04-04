@@ -452,12 +452,16 @@ void Graph<T>::dijkstraShortestPath(const T &origin) {
 template<class T>
 vector<T> Graph<T>::getPath(const T &origin, const T &dest) const {
 	vector<T> res;
+	int distancia;
 	auto v = findVertex(dest);
 	if (v == nullptr || v->dist == INF) // missing or disconnected
 		return res;
-	for ( ; v != nullptr; v = v->path)
+	for ( ; v != nullptr; v = v->path){
+		distancia+=v->dist;
 		res.push_back(v->info);
+	}
 	reverse(res.begin(), res.end());
+	res.push_back(distancia);
 	return res;
 }
 

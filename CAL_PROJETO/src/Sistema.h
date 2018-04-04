@@ -46,6 +46,7 @@ public:
 	int getUtenteIndex(int identificacao) const;
 
 	//Others
+	void criarGrafo();
 	void alugaBike(int index);
 	void devolveBike(int index);
 	void system_Manager(unsigned int index, string bikeType);

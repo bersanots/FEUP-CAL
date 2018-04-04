@@ -11,7 +11,7 @@
  * Para cada introducao do utente e verificado se o mesmo introduziu o formato de dados pedido
  * e se os dados sao validos, caso contrario e impressa uma mensagem e e lancada uma excecao.
  */
-void Sistema::addPontoPartilha() {
+/*void Sistema::addPontoPartilha() {
 
 	cout << "Adiciona Ponto de Partilha:" << endl << endl;
 
@@ -162,7 +162,7 @@ void Sistema::addPontoPartilha() {
 		}
 	};
 
-	addPontoPartilha(new PontoPartilha{spot,value,nome});
+	addPontoPartilha(new PontoPartilha{spot,value,nome,});
 
 	for(unsigned int i = 0; i < 5; i++)
 	{
@@ -173,7 +173,7 @@ void Sistema::addPontoPartilha() {
 	cout << endl << "Novo ponto de partilha adicionado ao sistema" << endl << endl;
 
 	return;
-}
+}*/
 
 /**
  * Adiciona um utente ao sistema, pedindo ao utente que introduza os seus dados necessarios
@@ -736,6 +736,19 @@ bool sortById(Utente* u1, Utente* u2)
 
 	return false;
 }
+
+
+void Sistema::criarGrafo(){
+	for(unsigned int i=0; i<nos.size(); i++)
+		grafo.addVertex(nos.at(i));
+	for(unsigned int i=0; i<estradas.size(); i++)
+		for(unsigned int j=0; j<estradas.at(i).getVertices().size()/2; j++){
+			Node no1{estradas.at(i).getVertices().at(j)->getInfo()};
+			Node no2{estradas.at(i).getVertices().at(j+1)->getInfo()};
+			grafo.addEdge(no1,no2,no1.distanceTo(no2));
+		}
+}
+
 
 /**
  * Apresenta os passos e pede ao utente que preencha os campos apresentados
