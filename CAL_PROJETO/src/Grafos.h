@@ -34,6 +34,7 @@ class Vertex {
 	bool removeEdgeTo(Vertex<T> *d);
 public:
 	Vertex(T in);
+	T getInfo() const;
 	friend class Graph<T>;
 };
 
@@ -77,6 +78,11 @@ public:
 
 template <class T>
 Vertex<T>::Vertex(T in): info(in) {}
+
+template <class T>
+T Vertex<T>::getInfo() const{
+	return info;
+}
 
 template <class T>
 Edge<T>::Edge(Vertex<T> *d, double w): dest(d), weight(w) {}

@@ -9,7 +9,7 @@ using namespace std;
 
 class Street {
 private:
-	int id;
+	long id;
 	string name;
 	vector<Vertex<Node>*> vertices;
 	bool twoWays;
@@ -17,11 +17,11 @@ private:
 public:
 	Street();
 	~Street();
-	Street(int id, string name, vector<Vertex<Node>*> vertices, bool twoWays);
-	int getID() const;
+	Street(long id, string name, vector<Vertex<Node>*> vertices, bool twoWays);
+	long getID() const;
 	string getName() const;
 	vector<Vertex<Node>*> getVertices() const;
-	void setID(int id);
+	void setID(long id);
 	void setName(string name);
 	void setTwoWays(bool value);
 	void addVertex(Vertex<Node>* no);
@@ -31,7 +31,7 @@ public:
 
 inline ostream& operator <<(ostream & o, Street st)
 {
-	o << st.getID() << ';' << st.getName() << ';' << st.isTwoWays() << ';';
+	o << st.getID() << ';' << st.getName() << ';' << st.isTwoWays() << ";";
 	return o;
 }
 
@@ -40,7 +40,7 @@ inline istream& operator >>(istream & i, Street & st) {
 	char b{};
 	string str{};
 	bool val{};
-	unsigned int id{};
+	unsigned long id{};
 
 	i >> id >> b;
 	st.setID(id);

@@ -94,6 +94,7 @@ void checkinSys(Sistema & ER){
 	f_pontos_partilha.close();
 
 	ifstream f_nodes{};
+	stringstream ss2{};
 
 	try{
 		f_nodes.open("nodes.txt");
@@ -109,11 +110,10 @@ void checkinSys(Sistema & ER){
 	while(!f_nodes.eof()){
 		getline(f_nodes,f_line);
 		if (f_line != ""){
-			ss << f_line;
+			ss2 << f_line;
 			Node node{};
-			ss >> node;
+			ss2 >> node;
 			ER.addNode(node);
-			cout << node << endl;
 		}
 	}
 
@@ -121,6 +121,7 @@ void checkinSys(Sistema & ER){
 
 	ifstream f_streets{};
 	ifstream f_connects{};
+	stringstream ss3{};
 
 	try{
 		f_streets.open("roads.txt");
@@ -144,14 +145,39 @@ void checkinSys(Sistema & ER){
 		return;
 	}
 
+	f_connects.close();
+
+	stringstream ss4{};
+	long st{}, no1{}, no2{};
+	char c1{}, c2{}, c3{};
+
 	while(!f_streets.eof()){
 		getline(f_streets,f_line);
 		if (f_line != ""){
-			ss << f_line;
+			ss3 << f_line;
 			Street street{};
-			ss >> street;
+			ss3 >> street;
+			f_connects.open("subroads.txt");
+			while(!f_connects.eof()){
+				getline(f_connects,f_line);
+				if (f_line != ""){
+					ss4 << f_line;
+					ss4 >> st >> c1 >> no1 >> c2 >> no2 >> c3;
+					if(street.getID()==st){
+						for(unsigned int i=0; i<ER.getNodes().size(); i++)
+							if(ER.getNodes().at(i).getID()==no1){
+								Vertex<Node>* vert1 = new Vertex<Node>{ER.getNodes().at(i)};
+								street.addVertex(vert1);
+							}
+							else if(ER.getNodes().at(i).getID()==no2){
+								Vertex<Node>* vert2 = new Vertex<Node>{ER.getNodes().at(i)};
+								street.addVertex(vert2);
+							}
+					}
+				}
+			}
+			f_connects.close();
 			ER.addStreet(street);
-			cout << street << endl;
 		}
 	}
 
@@ -205,6 +231,62 @@ void checkoutSys(Sistema & ER){
 	}
 
 	f_pontos_partilha.close();
+
+	ofstream f_nodes{};
+
+	try{
+		f_nodes.open("nodes.txt");
+		if (!f_nodes.is_open())
+			throw AberturaFalhada<string>("nodes.txt");
+	}
+	catch (AberturaFalhada<string> &a){
+		cout << "Falha ao abrir o ficheiro " << a.getFicheiro() << "." << endl;
+		cout << "Tente mais tarde./n";
+		return;
+	}
+
+	for(unsigned int it=0 ; it<ER.getNodes().size() ; it++){
+		f_nodes << ER.getNodes().at(it) << endl;
+	}
+
+	f_nodes.close();
+
+	ofstream f_streets{};
+	ofstream f_connections{};
+
+	try{
+		f_utentes.open("roads.txt");
+		if (!f_utentes.is_open())
+			throw AberturaFalhada<string>("roads.txt");
+	}
+	catch (AberturaFalhada<string> &a){
+		cout << "Falha ao abrir o ficheiro " << a.getFicheiro() << "." << endl;
+		cout << "Tente mais tarde./n";
+		return;
+	}
+
+	try{
+		f_connections.open("subroads.txt");
+		if (!f_connections.is_open())
+			throw AberturaFalhada<string>("subroads.txt");
+	}
+	catch (AberturaFalhada<string> &a){
+		cout << "Falha ao abrir o ficheiro " << a.getFicheiro() << "." << endl;
+		cout << "Tente mais tarde.\n";
+		return;
+	}
+
+	for(unsigned int it=0 ; it<ER.getStreets().size() ; it++){
+		f_streets << ER.getStreets().at(it) << endl;
+		f_connections << ER.getStreets().at(it).getID() << ";";
+		for(unsigned int i=0; i<ER.getStreets().at(it).getVertices().size(); i++)
+			f_connections << ER.getStreets().at(it).getVertices().at(i)->getInfo().getID() << ";";
+		f_connections << endl;
+	}
+
+	f_connections.close();
+
+	f_streets.close();
 
 	return;
 }

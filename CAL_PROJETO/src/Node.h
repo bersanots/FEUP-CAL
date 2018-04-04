@@ -7,17 +7,17 @@ using namespace std;
 
 class Node {
 private:
-	int id;
+	long id;
 	Localizacao coords;
 
 public:
 	Node();
 	~Node();
-	Node(int id, double lon, double lat);
-	int getID() const;
+	Node(long id, double lon, double lat);
+	long getID() const;
 	double getLongitude() const;
 	double getLatitude() const;
-	void setID(int ID);
+	void setID(long ID);
 	void setLocation(Localizacao loc);
 	bool operator==(const Node & n2) const;
 };
@@ -33,7 +33,7 @@ inline ostream& operator <<(ostream & o, Node n)
 inline istream& operator >>(istream & i, Node & n) {
 	char b1{}, b2{};
 	Localizacao loc{};
-	unsigned int id{};
+	long id{};
 
 	i >> id >> b1 >> loc >> b2;
 
