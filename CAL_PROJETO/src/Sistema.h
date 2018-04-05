@@ -12,7 +12,7 @@
 class Sistema {
 	vector<PontoPartilha* > pontosPartilha;		/**< Pontos de partilha referentes ao sistema. */
 	vector<Utente* > utentes;					/**< Utentes referentes ao sistema. */
-	Graph<Node> grafo;
+	Graph<int> grafo;
 	vector<Node> nos;
 	vector<Street> estradas;
 
@@ -47,6 +47,9 @@ public:
 
 	//Others
 	void criarGrafo();
+	Node closestPoint(Localizacao l);
+	Vertex<int> minDistance();
+	int bestChoice(Localizacao l);
 	void alugaBike(int index);
 	void devolveBike(int index);
 	void system_Manager(unsigned int index, string bikeType);

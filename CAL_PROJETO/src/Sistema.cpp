@@ -621,15 +621,15 @@ void Sistema::getInfo() const {
 	cout << "Nome da empresa: ECO RIDES" << endl << endl;
 	cout << "Numero total de pontos de Partilha: " << pontosPartilha.size() << endl << endl;
 	cout << "Pontos de Partilha:" << endl << endl;
-	cout << setw (20) << left << "Nome" << setw (13) << "GPS" << setw (10) << "Capacidade" << endl;
+	cout << setw (20) << left << "Nome" << setw (13) << "GPS" << setw (10) << "Altitude" << setw (13) << "Capacidade" << setw (13) << "Num Bicicletas" << endl;
 
 	for (unsigned int i=0 ; i<pontosPartilha.size() ; i++){
 		cout << setw(10) << pontosPartilha.at(i)->getNome();
 		cout << '(' << setw(9) << pontosPartilha.at(i)->getLocal().getX();
-		cout << "," << setw(9) << pontosPartilha.at(i)->getLocal().getY() << setw(5) << ')';
-
-		cout << pontosPartilha.at(i)->getCapacidade();
-
+		cout << "," << setw(9) << pontosPartilha.at(i)->getLocal().getY() << setw(6) << ')';
+		cout << setw(10) << pontosPartilha.at(i)->getAltitude();
+		cout << setw(15) << pontosPartilha.at(i)->getCapacidade();
+		cout << pontosPartilha.at(i)->getBikes().size();
 		cout << endl;
 	}
 
@@ -739,13 +739,26 @@ bool sortById(Utente* u1, Utente* u2)
 
 
 void Sistema::criarGrafo(){
-	for(unsigned int i=0; i<nos.size(); i++)
-		grafo.addVertex(nos.at(i));
+	int id{0};
+	for(unsigned int i=0; i<nos.size(); i++){
+		for(unsigned int j=0; j<pontosPartilha.size(); j++){
+			if(pontosPartilha.at(j)->getID()==nos.at(i).getID())
+				pontosPartilha.at(j)->setID(id);
+		}
+		nos.at(i).setID(id);
+		grafo.addVertex(nos.at(i).getID());
+		id++;
+	}
+	id=0;
 	for(unsigned int i=0; i<estradas.size(); i++)
 		for(unsigned int j=0; j<estradas.at(i).getVertices().size()/2; j++){
 			Node no1{estradas.at(i).getVertices().at(j)->getInfo()};
+			no1.setID(id);
+			id++;
 			Node no2{estradas.at(i).getVertices().at(j+1)->getInfo()};
-			grafo.addEdge(no1,no2,no1.distanceTo(no2));
+			no2.setID(id);
+			id++;
+			grafo.addEdge(no1.getID(),no2.getID(),no1.distanceTo(no2));
 		}
 }
 
@@ -762,8 +775,6 @@ void Sistema::criarGrafo(){
  * e se os dados sao validos, caso contrario e impressa uma mensagem e e lancada uma excecao.
  * @param index indice do utente no vetor de utentes do sistema
  */
-void Sistema::alugaBike(int index) {
-}
 
 /**
  * Apresenta a informacao do aluger e chama-se o metodo da classe utente removeBicicleta
@@ -773,7 +784,59 @@ void Sistema::alugaBike(int index) {
  * No final, chama a funcao Sistem_Manager para gerir as bicicletas.
  * @param index indice do utente no vetor de utentes do sistema
  */
-void Sistema::devolveBike(int index) {}
+void Sistema::alugaBike(int index) {
+	Bicicleta* b;
+	Utilizacao ut;
+	utentes.at(index)->alugaBicicleta(b, ut);
+
+}
+
+Node Sistema::closestPoint(Localizacao l){
+	int minLon=2;
+	int minLat=2;
+	Node currentNode;
+
+	for(unsigned int i=0; i<nos.size(); i++){
+		if(abs(nos.at(i).getLongitude() - l.getX()) < minLon
+				&& abs(nos.at(i).getLatitude() - l.getY()) < minLat)
+			currentNode = nos.at(i);
+	}
+	return currentNode;
+}
+
+Vertex<int> Sistema::minDistance(){
+	int min = INF;
+	Vertex<int> vert(0);
+	Vertex<int> vertmin(INF);
+	for(unsigned int i=0; i<pontosPartilha.size(); i++){
+		Vertex<int> vert(pontosPartilha.at(i)->getID());
+		if(vert.getDist()<min){
+			min = vert.getDist();
+			vertmin = vert;
+		}
+	}
+	return vertmin;
+}
+
+int Sistema::bestChoice(Localizacao l){
+
+	return 0;
+}
+
+void Sistema::devolveBike(int index) {
+	Localizacao l = utentes.at(index)->getLocalizacao();
+	int id = closestPoint(l).getID();
+	grafo.dijkstraShortestPath(id);
+	Vertex<int> min = minDistance();
+	string name;
+	for(unsigned int i=0; i<pontosPartilha.size(); i++){
+		cout << pontosPartilha.at(i)->getID() << endl;
+		if(pontosPartilha.at(i)->getID()==min.getInfo())
+			name = pontosPartilha.at(i)->getNome();
+	}
+	cout << "O ponto de entrega mais perto do lugar onde se encontra e: " << name;
+	cout << " e a distancia ate esse ponto e " << min.getDist() << endl;
+}
 
 
 /**

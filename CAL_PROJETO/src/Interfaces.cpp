@@ -341,13 +341,20 @@ void admin_interface(Sistema &ER) {
 
 		//Opcoes possiveis apresentadas no menu
 		switch (value)
-		{}
-		if(value != 7)
+		{
+		case 1:
+			ER.removeUtente(); //Algoritmo de Dijkstra
+			break;
+		case 2:
+			ER.getInfo();
+			break;
+		}
+		if(value != 3)
 			system("pause");
 
 		system("cls");
 
-	}while(value != 7);
+	}while(value != 3);
 
 	system("cls");
 	return;

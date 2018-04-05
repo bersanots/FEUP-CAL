@@ -70,6 +70,10 @@ Localizacao PontoPartilha::getLocal() const {
 	return coords;
 }
 
+double PontoPartilha::getAltitude() const{
+	return altitude;
+}
+
 /**
  * @return Retorna a capacidade do ponto de partilha.
  */

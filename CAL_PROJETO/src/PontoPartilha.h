@@ -19,6 +19,7 @@ public:
 	//Metodos Get
 	Localizacao getLocal() const;
 	string getNome() const;
+	double getAltitude() const;
 	unsigned int getCapacidade() const;
 	vector<Bicicleta*> getBikes() const;
 
@@ -41,7 +42,7 @@ public:
  */
 inline ostream& operator <<(ostream & o, const PontoPartilha & p)
 {
-	o << p.getNome() << '/' << p.getLocal() << '/' << p.getCapacidade() << '/' << p.getBikes().size() << '/';
+	o << p.getNome() << '/' << p.getID() << '/' << p.getLocal() << '/' << p.getAltitude() << '/' << p.getCapacidade() << '/' << p.getBikes().size() << '/';
 	return o;
 }
 

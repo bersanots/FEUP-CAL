@@ -16,6 +16,8 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <fstream>
+#include <cstdio>
+#include <sstream>
 //#include <conio.h>
 
 using namespace std;

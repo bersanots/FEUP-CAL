@@ -8,7 +8,7 @@
 #include "Node.h"
 
 
-void graphviewer_display();
+/*void graphviewer_display();
 
 void print_path_GV(vector<Node> path,GraphViewer * gv);
 
@@ -150,4 +150,4 @@ void print_path_GV(vector<Node> path,GraphViewer * gv)
 	{
 		gv->setVertexColor(v.getID(), RED);
 	}
-}
+}*/
