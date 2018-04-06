@@ -3,7 +3,7 @@
 Street::Street() {
 }
 
-Street::Street(long id, string name, vector<Vertex<Node>*> vertices, bool twoWays) {
+Street::Street(long long id, string name, vector<Vertex<Node>*> vertices, bool twoWays) {
 	this->id = id;
 	this->name = name;
 	this->vertices = vertices;
@@ -13,7 +13,7 @@ Street::Street(long id, string name, vector<Vertex<Node>*> vertices, bool twoWay
 Street::~Street() {
 }
 
-long Street::getID() const {
+long long Street::getID() const {
 	return this->id;
 }
 
@@ -25,7 +25,7 @@ vector<Vertex<Node>*> Street::getVertices() const {
 	return this->vertices;
 }
 
-void Street::setID(long id){
+void Street::setID(long long id){
 	this->id = id;
 }
 

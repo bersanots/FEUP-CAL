@@ -56,8 +56,8 @@ void graphviewer_display()
 	inFile.open("nodes.txt");
 
 	if (!inFile) {
-	    cerr << "Unable to open file nodes.txt";
-	    exit(1);   // call system to stop
+		cerr << "Unable to open file nodes.txt";
+		exit(1);   // call system to stop
 	}
 
 	std::string   line,line2,line3;
@@ -73,38 +73,38 @@ void graphviewer_display()
 	while(std::getline(inFile, line))
 	{
 
-	    std::stringstream linestream(line);
-	    std::string         data;
+		std::stringstream linestream(line);
+		std::string         data;
 
-	    linestream >> idNo;
-	    std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
-	    linestream >> X;
-	    std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
-	    linestream >> Y;
-	    std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
-	    gv->addNode(idNo,Y,X);//-----------------------------------------------------------------------
+		linestream >> idNo;
+		std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+		linestream >> X;
+		std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+		linestream >> Y;
+		std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+		gv->addNode(idNo,Y,X);//-----------------------------------------------------------------------
 
-	    ifstream store;
-	   	store.open("pontosPartilha.txt");
-	   	if (!store)
-	   	{
-	   		cerr << "Unable to open file pontosPartilha.txt";
-	   		exit(1);   // call system to stop
-	   	}
+		ifstream store;
+		store.open("pontosPartilha.txt");
+		if (!store)
+		{
+			cerr << "Unable to open file pontosPartilha.txt";
+			exit(1);   // call system to stop
+		}
 
-	   	while(std::getline(store, line3))
-	   	{
-	   		std::stringstream linestream3(line3);
+		while(std::getline(store, line3))
+		{
+			std::stringstream linestream3(line3);
 
-	   	 	std::getline(linestream3, data, '/');  // read up-to the first ; (discard ;).
-	   	 	linestream3 >> idStore;
-	   	    std::getline(linestream3, data, '/');
-	   	 	if(idStore==idNo)
-	   	 	{
-	   	 	    gv->setVertexColor(idNo,"green");
-	   	   	}
-	   	}
-	   	store.close();
+			std::getline(linestream3, data, '/');  // read up-to the first ; (discard ;).
+			linestream3 >> idStore;
+			std::getline(linestream3, data, '/');
+			if(idStore==idNo)
+			{
+				gv->setVertexColor(idNo,"green");
+			}
+		}
+		store.close();
 	}
 
 	inFile.close();
@@ -113,58 +113,58 @@ void graphviewer_display()
 	//Ler o ficheiro arestas.txt
 	inFile.open("subroads.txt");
 
-		if (!inFile) {
-		    cerr << "Unable to open file datafile.txt";
-		    exit(1);   // call system to stop
+	if (!inFile) {
+		cerr << "Unable to open file datafile.txt";
+		exit(1);   // call system to stop
+	}
+
+	int idAresta=0;
+	int idStreet=0;
+	int idNoOrigem=0;
+	int idNoDestino=0;
+	string nomeRua="";
+	int Direcao;
+	double rua=0;
+
+	while(std::getline(inFile, line))
+	{
+		std::stringstream linestream(line);
+
+		std::string data;
+
+		idAresta++;
+		linestream >> rua;
+
+		std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+		linestream >> idNoOrigem;
+		std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+		linestream >> idNoDestino;
+		ifstream street;
+		street.open("roads.txt");
+		if (!street) {
+			cerr << "Unable to open file datafile.txt";
+			exit(1);   // call system to stop
 		}
-
-		int idAresta=0;
-		int idStreet=0;
-		int idNoOrigem=0;
-		int idNoDestino=0;
-		string nomeRua="";
-		int Direcao;
-		double rua=0;
-
-		while(std::getline(inFile, line))
+		while(std::getline(street, line2))
 		{
-		    std::stringstream linestream(line);
-
-		    std::string data;
-
-		    idAresta++;
-		    linestream >> rua;
-
-		    std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
-		    linestream >> idNoOrigem;
-		    std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
-		    linestream >> idNoDestino;
-		    ifstream street;
-		    street.open("roads.txt");
-		    if (!street) {
-		    		    cerr << "Unable to open file datafile.txt";
-		    		    exit(1);   // call system to stop
-		    		}
-		    while(std::getline(street, line2))
-		    {
-		    	 std::stringstream linestream2(line2);
-		    	linestream2 >> idStreet;
-		    	if(idStreet==rua)
-		    	{
-		    		std::getline(linestream2, data, ';');  // read up-to the first ; (discard ;).
-		    		linestream2 >> nomeRua;
-		    		std::getline(linestream2, data, ';');
-		    		linestream2 >> Direcao;
-		    	}
-		    }
-		    	if(Direcao==0)
-		    		gv->addEdge(idAresta,idNoOrigem,idNoDestino, EdgeType::UNDIRECTED);
-
-		    	else if (Direcao==1)
-		    		gv->addEdge(idAresta,idNoOrigem,idNoDestino, EdgeType::DIRECTED);
+			std::stringstream linestream2(line2);
+			linestream2 >> idStreet;
+			if(idStreet==rua)
+			{
+				std::getline(linestream2, data, ';');  // read up-to the first ; (discard ;).
+				linestream2 >> nomeRua;
+				std::getline(linestream2, data, ';');
+				linestream2 >> Direcao;
+			}
 		}
+		if(Direcao==0)
+			gv->addEdge(idAresta,idNoOrigem,idNoDestino, EdgeType::UNDIRECTED);
 
-		inFile.close();
+		else if (Direcao==1)
+			gv->addEdge(idAresta,idNoOrigem,idNoDestino, EdgeType::DIRECTED);
+	}
+
+	inFile.close();
 
 
 	gv->rearrange();
@@ -293,8 +293,9 @@ void checkinSys(Sistema & ER){
 	f_connects.close();
 
 	stringstream ss4{};
-	long st{}, no1{}, no2{};
+	long long st{}, no1{}, no2{};
 	char c1{}, c2{}, c3{};
+	int id{0};
 
 	while(!f_streets.eof()){
 		getline(f_streets,f_line);
@@ -308,20 +309,18 @@ void checkinSys(Sistema & ER){
 				if (f_line != ""){
 					ss4 << f_line;
 					ss4 >> st >> c1 >> no1 >> c2 >> no2 >> c3;
-					if(street.getID()==st){
+					if(street.getID()==st)
 						for(unsigned int i=0; i<ER.getNodes().size(); i++)
-							if(ER.getNodes().at(i).getID()==no1){
-								Vertex<Node>* vert1 = new Vertex<Node>{ER.getNodes().at(i)};
-								street.addVertex(vert1);
+							if(ER.getNodes().at(i).getID()==no1 || ER.getNodes().at(i).getID()==no2){
+								Node node{ER.getNodes().at(i)};
+								node.setID(i);
+								Vertex<Node>* vert = new Vertex<Node>{node};
+								street.addVertex(vert);
 							}
-							else if(ER.getNodes().at(i).getID()==no2){
-								Vertex<Node>* vert2 = new Vertex<Node>{ER.getNodes().at(i)};
-								street.addVertex(vert2);
-							}
-					}
 				}
 			}
 			f_connects.close();
+			street.setID(id++);
 			ER.addStreet(street);
 		}
 	}

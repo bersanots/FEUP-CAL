@@ -14,7 +14,7 @@ class PontoPartilha : public Node{
 	string nome;								/**< Nome do ponto de partilha. */
 public:
 	PontoPartilha();	/**< Necessario para o overload do operador de extracao na classe utente.*/
-	PontoPartilha(long id, double lon, double lat, double alt, unsigned int storage,string name);
+	PontoPartilha(long long id, double lon, double lat, double alt, unsigned int storage,string name);
 
 	//Metodos Get
 	Localizacao getLocal() const;
@@ -57,7 +57,7 @@ inline istream& operator >>(istream & i, PontoPartilha & p)
 	Localizacao loc{};
 	double alt{};
 	unsigned int n1{}, n2{};
-	long id{};
+	long long id{};
 	char b1{}, b2{}, b3{}, b4{}, b5{};
 
 	Bicicleta * b = new Bicicleta{}; //apontador generico apenas para reservar espaco no vetor

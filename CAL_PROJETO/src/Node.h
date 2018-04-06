@@ -8,18 +8,18 @@ using namespace std;
 
 class Node {
 protected:
-	long id;
+	long long id;
 	Localizacao coords;
 
 public:
 	Node();
 	~Node();
-	Node(long id, double lon, double lat);
-	long getID() const;
+	Node(long long id, double lon, double lat);
+	long long getID() const;
 	double getLongitude() const;
 	double getLatitude() const;
 	double distanceTo(const Node & n2) const;
-	void setID(long ID);
+	void setID(long long id);
 	void setLocation(Localizacao loc);
 	void operator=(const Node & n2);
 	bool operator==(const Node & n2) const;
@@ -36,7 +36,7 @@ inline ostream& operator <<(ostream & o, Node n)
 inline istream& operator >>(istream & i, Node & n) {
 	char b1{}, b2{};
 	Localizacao loc{};
-	long id{};
+	long long id{};
 
 	i >> id >> b1 >> loc >> b2;
 

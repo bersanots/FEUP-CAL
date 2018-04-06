@@ -16,7 +16,7 @@ PontoPartilha::PontoPartilha() : Node(){
  * @param spot localizacao do ponto de partilha
  * @param storage capacidade do ponto de partilha
  */
-PontoPartilha::PontoPartilha(long id, double lon, double lat, double alt, unsigned int storage,string name) : Node(id,lon,lat) {
+PontoPartilha::PontoPartilha(long long id, double lon, double lat, double alt, unsigned int storage,string name) : Node(id,lon,lat) {
 	this->altitude = alt;
 	this->capacidade = storage;
 	this->preco = 10/alt;

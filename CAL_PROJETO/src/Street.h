@@ -9,7 +9,7 @@ using namespace std;
 
 class Street {
 private:
-	long id;
+	long long id;
 	string name;
 	vector<Vertex<Node>*> vertices;
 	bool twoWays;
@@ -17,11 +17,11 @@ private:
 public:
 	Street();
 	~Street();
-	Street(long id, string name, vector<Vertex<Node>*> vertices, bool twoWays);
-	long getID() const;
+	Street(long long id, string name, vector<Vertex<Node>*> vertices, bool twoWays);
+	long long getID() const;
 	string getName() const;
 	vector<Vertex<Node>*> getVertices() const;
-	void setID(long id);
+	void setID(long long id);
 	void setName(string name);
 	void setTwoWays(bool value);
 	void addVertex(Vertex<Node>* no);
