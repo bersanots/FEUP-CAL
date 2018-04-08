@@ -165,7 +165,6 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
 	if (v1 == NULL || v2 == NULL)
 		return false;
 	v1->addEdge(v2,w);
-	cout << v1->adj.size() << endl;
 	return true;
 }
 
@@ -179,11 +178,9 @@ void Graph<T>::dijkstraShortestPath(const T &origin) {
 	q.insert(s);
 	while ( ! q.empty() ) {
 		auto v = q.extractMin();
-		cout << v->getInfo() << ",," << v->adj.size() << endl;
 		for (auto e : v->adj) {
 			auto oldDist = e.dest->dist;
 			if (relax(v, e.dest, e.weight)) {
-				cout << e.weight << endl;
 				if (oldDist == INF)
 					q.insert(e.dest);
 				else
@@ -218,7 +215,6 @@ Vertex<T> * Graph<T>::initSingleSource(const T &origin) {
 
 template<class T>
 bool Graph<T>::relax(Vertex<T> *v, Vertex<T> *w, double weight) {
-	cout << v->dist << ".." << weight << ".." << w->dist << endl;
 	if (v->dist + weight < w->dist) {
 		w->dist = v->dist + weight;
 		w->path = v;

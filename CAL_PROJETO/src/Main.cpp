@@ -313,14 +313,14 @@ void checkinSys(Sistema & ER){
 						for(unsigned int i=0; i<ER.getNodes().size(); i++)
 							if(ER.getNodes().at(i).getID()==no1 || ER.getNodes().at(i).getID()==no2){
 								Node node{ER.getNodes().at(i)};
-								node.setID(i);
+								//node.setID(i);
 								Vertex<Node>* vert = new Vertex<Node>{node};
 								street.addVertex(vert);
 							}
 				}
 			}
 			f_connects.close();
-			street.setID(id++);
+			//street.setID(id++);
 			ER.addStreet(street);
 		}
 	}

@@ -740,7 +740,7 @@ bool sortById(Utente* u1, Utente* u2)
 
 void Sistema::criarGrafo(){
 	for(unsigned int i=0; i<nos.size(); i++){
-		nos.at(i).setID(i);
+		//nos.at(i).setID(i);
 		grafo.addVertex(nos.at(i).getID());
 	}
 	for(unsigned int i=0; i<estradas.size(); i++)
@@ -781,19 +781,15 @@ void Sistema::alugaBike(int index) {
 }
 
 Node Sistema::closestPoint(Localizacao l){
-	int minLon=2;
-	int minLat=2;
-	Node currentNode;
-
+	double minDist=INF;
+	Node currentNode(0,l.getX(),l.getY()), minNode;
 	for(unsigned int i=0; i<nos.size(); i++){
-		if(abs(nos.at(i).getLongitude() - l.getX()) < minLon
-				&& abs(nos.at(i).getLatitude() - l.getY()) < minLat){
-			minLon=abs(nos.at(i).getLongitude() - l.getX());
-			minLat=abs(nos.at(i).getLatitude() - l.getY());
-			currentNode = nos.at(i);
+		if(nos.at(i).distanceTo(currentNode)<minDist){
+			minDist=nos.at(i).distanceTo(currentNode);
+			minNode = nos.at(i);
 		}
 	}
-	return currentNode;
+	return minNode;
 }
 
 Vertex<int> Sistema::minDistance(){
@@ -805,8 +801,7 @@ Vertex<int> Sistema::minDistance(){
 		for(unsigned int j=0; j<pontosPartilha.size(); j++)
 			if(pontosPartilha.at(j)->getID()==grafo.getVertexSet().at(i)->getInfo())
 				isPP=true;
-		cout << grafo.getVertexSet().at(i)->getDist() << endl;
-		if(grafo.getVertexSet().at(i)->getDist()<min && isPP){
+		if(grafo.getVertexSet().at(i)->getDist()<=min && isPP){
 			min=grafo.getVertexSet().at(i)->getDist();
 			minIndex=i;
 		}
@@ -822,7 +817,6 @@ int Sistema::bestChoice(Localizacao l){
 void Sistema::devolveBike(int index) {
 	Localizacao l = utentes.at(index)->getLocalizacao();
 	int id = closestPoint(l).getID();
-	cout << id << ".,." << nos.size() << ",.," << grafo.getNumVertex() << endl;
 	grafo.dijkstraShortestPath(id);
 	Vertex<int> min = minDistance();
 	string name;
