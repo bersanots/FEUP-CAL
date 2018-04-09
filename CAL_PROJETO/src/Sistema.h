@@ -49,12 +49,16 @@ public:
 	void criarGrafo();
 	Node closestPoint(Localizacao l);
 	Vertex<int> minDistance();
-	int bestChoice(Localizacao l);
+	pair<float, int> bestChoice();
+	pair<float, int> cheapestPoint();
 	void alugaBike(int index);
 	void devolveBike(int index);
 	void system_Manager(unsigned int index, string bikeType);
 	void displayNearestPP(int index) const;
 	void displayUtentes() const;
+	vector<pair<float,int>> organizePair();
+	double getDist(PontoPartilha p);
+
 };
 
 /**

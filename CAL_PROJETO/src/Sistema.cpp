@@ -1,6 +1,5 @@
 #include "Sistema.h"
 
-
 /////////////////
 // METODOS ADD //
 /////////////////
@@ -809,23 +808,94 @@ Vertex<int> Sistema::minDistance(){
 	return *grafo.getVertexSet().at(minIndex);
 }
 
-int Sistema::bestChoice(Localizacao l){
-
+double Sistema::getDist(PontoPartilha p){
+	for(int i=0; i< grafo.getVertexSet().size() ;i++){
+		if(grafo.getVertexSet().at(i)->getInfo() == p.getID())
+			return grafo.getVertexSet().at(i)->getDist();
+	}
 	return 0;
+}
+
+
+vector<pair<float,int>> Sistema::organizePair(){
+	vector<pair<float,int > > idDist;
+	for(int i=0; i<pontosPartilha.size(); i++){
+		float factor=0;
+		int id = pontosPartilha.at(i)->getID();
+		double d = getDist(*pontosPartilha.at(i));
+		double price = pontosPartilha.at(i)->getPrice();
+
+		factor = price * d;
+
+		idDist.push_back(make_pair(factor,id));
+	}
+
+	return idDist;
+}
+
+pair<float, int> Sistema::bestChoice(){
+	vector<pair<float, int> > idFactor = organizePair();
+	sort(idFactor.begin(), idFactor.end());
+
+	return idFactor[0];
+}
+
+pair<float, int> Sistema::cheapestPoint(){
+	vector<pair<double,int>> cheap;
+	for(int i=0; i<pontosPartilha.size(); i++){
+		cheap.push_back(make_pair(pontosPartilha.at(i)->getPrice(), pontosPartilha.at(i)->getID()));
+	}
+	sort(cheap.begin(), cheap.end());
+	return cheap[0];
 }
 
 void Sistema::devolveBike(int index) {
 	Localizacao l = utentes.at(index)->getLocalizacao();
 	int id = closestPoint(l).getID();
 	grafo.dijkstraShortestPath(id);
+
 	Vertex<int> min = minDistance();
 	string name;
+	float price, dist;
+
+	//----- POR DISTANCIA ----- //
 	for(unsigned int i=0; i<pontosPartilha.size(); i++){
-		if(pontosPartilha.at(i)->getID()==min.getInfo())
+		if(pontosPartilha.at(i)->getID()==min.getInfo()){
 			name = pontosPartilha.at(i)->getNome();
+			price=trunc(100 * pontosPartilha.at(i)->getPrice()) / 100;
+		}
 	}
-	cout << "O ponto de entrega mais perto do lugar onde se encontra e: " << name;
-	cout << " e a distancia ate esse ponto e " << min.getDist()*1000 << " metros" << endl;
+	dist = min.getDist()*1000;
+
+	cout << "PONTO DE ENTREGA MAIS PROXIMO: " << name;
+	cout << " [DISTANCIA: " << dist << " metros  |  PRECO: " << price << " euro(s)]" << endl;
+
+
+	//----- POR PRECO ----- //
+	for(unsigned int i=0; i<pontosPartilha.size(); i++){
+		if(pontosPartilha.at(i)->getID()==cheapestPoint().second){
+			name = pontosPartilha.at(i)->getNome();
+			price=trunc(100 * cheapestPoint().first) / 100;
+			dist=getDist(*pontosPartilha.at(i))*1000;
+		}
+	}
+
+	cout << "PONTO DE ENTREGA MAIS BARATO: " << name;
+	cout << " [DISTANCIA: " << dist << " metros  |  PRECO: " << price << " euro(s)]" << endl;
+
+
+	//----- POR RELACAO PRECO/DISTANCIA ----- //
+	for(unsigned int i=0; i<pontosPartilha.size(); i++){
+		if(pontosPartilha.at(i)->getID()==bestChoice().second){
+			name = pontosPartilha.at(i)->getNome();
+			price=trunc(100 * bestChoice().first/getDist(*pontosPartilha.at(i))) / 100;
+			dist=getDist(*pontosPartilha.at(i))*1000;
+		}
+	}
+
+	cout << "PONTO DE ENTREGA MAIS EM CONTA (considerando altitude, preco e distancia): " << name;
+	cout << " [DISTANCIA: " << dist << " metros  |  PRECO: " << price << " euro(s)]" << endl;
+
 }
 
 

@@ -6,7 +6,7 @@ using namespace std;
 void openInterface(Sistema & ER);
 void checkinSys(Sistema & ER);
 void checkoutSys(Sistema & ER);
-void graphviewer_display();
+void graphviewer_display(Sistema & ER);
 
 /**
  * Inicializacao do programa, checkin do sistema , apresentacao de interface ,
@@ -29,7 +29,7 @@ int main()
 
 	sys.criarGrafo();
 
-	//graphviewer_display();
+	graphviewer_display(sys);
 
 	openInterface(sys);
 
@@ -39,7 +39,7 @@ int main()
 }
 
 
-void graphviewer_display()
+void graphviewer_display(Sistema &ER)
 {
 	GraphViewer *gv = new GraphViewer(800, 800, false);
 	gv->createWindow(800,800);
@@ -63,10 +63,23 @@ void graphviewer_display()
 	std::string   line,line2,line3;
 
 	int idNo=0;
-	int X=0;
-	int Y=0;
+	double X=0;
+	double Y=0;
 	int idStore=0;
 	string a="";
+
+	double longmin=INF, latmin=INF, longmax=-INF, latmax=-INF;
+
+	for(auto n : ER.getNodes()){
+		if(n.getLongitude()<longmin)
+			longmin=n.getLongitude();
+		if(n.getLatitude()<latmin)
+			latmin=n.getLatitude();
+		if(n.getLongitude()>longmax)
+			longmax=n.getLongitude();
+		if(n.getLatitude()>latmax)
+			latmax=n.getLatitude();
+	}
 
 
 	string letra;
@@ -82,6 +95,10 @@ void graphviewer_display()
 		std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
 		linestream >> Y;
 		std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+
+		X=(X-longmin)/(longmax-longmin)*2000;
+		Y=(Y-latmin)/(latmax-latmin)*2000;
+
 		gv->addNode(idNo,Y,X);//-----------------------------------------------------------------------
 
 		ifstream store;

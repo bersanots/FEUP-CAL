@@ -89,6 +89,13 @@ vector<Bicicleta *> PontoPartilha::getBikes() const {
 	return bicicletas;
 }
 
+double PontoPartilha::getPrice() {
+	if(3/altitude < 1)
+		return 2 * (3/ altitude);
+	return 3/ altitude;
+
+}
+
 /////////////////
 // METODOS SET //
 /////////////////

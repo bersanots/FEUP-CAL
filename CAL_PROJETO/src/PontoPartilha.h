@@ -22,6 +22,7 @@ public:
 	double getAltitude() const;
 	unsigned int getCapacidade() const;
 	vector<Bicicleta*> getBikes() const;
+	double getPrice();
 
 	//Metodos Set
 	void setNome(string name);
@@ -53,14 +54,14 @@ inline ostream& operator <<(ostream & o, const PontoPartilha & p)
 
 inline istream& operator >>(istream & i, PontoPartilha & p)
 {
-	string str{};
-	Localizacao loc{};
-	double alt{};
-	unsigned int n1{}, n2{};
-	long long id{};
-	char b1{}, b2{}, b3{}, b4{}, b5{};
+	string str;
+	Localizacao loc;
+	double alt;
+	unsigned int n1, n2;
+	long long id=0;
+	char b1=0, b2=0, b3=0, b4=0, b5=0;
 
-	Bicicleta * b = new Bicicleta{}; //apontador generico apenas para reservar espaco no vetor
+	Bicicleta * b = new Bicicleta; //apontador generico apenas para reservar espaco no vetor
 
 	getline(i,str,'/');
 	p.setNome(str);
