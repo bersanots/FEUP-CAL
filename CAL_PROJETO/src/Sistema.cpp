@@ -282,80 +282,6 @@ void Sistema::addNewUtente() {
 	return;
 }
 
-/**
- * Pede o nome do ponto de partilha onde vai adicionar a bicicleta.
- * Cria uma bicicleta e adiciona-a ao ponto de partilha.
- * Se a capaciadade do ponto de partilha estiver no maximo e apresentada uma mensagem.
- * Para cada introducao do utente e verificado se o mesmo introduziu o formato de dados pedido
- * e se os dados sao validos, caso contrario e impressa uma mensagem e e lancada uma excecao.
- */
-void Sistema::adicionaBike() {
-
-	cout << "Adiciona bicicleta: " << endl << endl;
-
-	cout << "Pontos de Partilha:" << endl << endl;
-	cout << setw (20) << left << "Nome" << setw (22) << "Local" << setw (13) << "GPS";
-	cout << setw (10) << "Capacidade" << endl;
-
-	for (unsigned int i=0 ; i<pontosPartilha.size() ; i++){
-		cout << setw(10) << pontosPartilha.at(i)->getNome();
-		cout << '(' << setw(9) << pontosPartilha.at(i)->getLocal().getX();
-		cout << "," << setw(9) << pontosPartilha.at(i)->getLocal().getY() << setw(5) << ')';
-		cout << pontosPartilha.at(i)->getCapacidade();
-		cout << endl;
-	}
-
-	cout << endl;
-
-	string nomePP{};
-	string bikeName{""};
-	int indexPP{-1};
-
-	cin.ignore(1000,'\n');
-
-	//Verifica ponto de partilha ao qual quer adicionar
-	while(1)
-	{
-		try {
-			cout << "Nome do Ponto de Partilha: " ;
-			getline(cin,nomePP);
-
-			if(valid_word(nomePP) == false)
-				throw OpcaoInvalida<string>(nomePP);
-
-			for(unsigned int i = 0; i < pontosPartilha.size(); i++)
-			{
-				if(pontosPartilha.at(i)->getNome() == nomePP)
-					indexPP = i;
-			}
-
-			if(indexPP == -1)
-				throw OpcaoInvalida<string>(nomePP);
-			cout << endl;
-
-			break;
-		}
-		catch (OpcaoInvalida<string> &op) {
-			cout << "Ponto de partilha inexistente(" << op.opcao << ") ! Tente novamente." << endl;
-			cin.clear();
-		}
-	}
-
-
-	if(pontosPartilha.at(indexPP)->getCapacidade() == pontosPartilha.at(indexPP)->getBikes().size())
-	{
-		cout << "A capacidade deste ponto de partilha ja foi alcancada ! Tente adicionar a outro ponto de partilha." << endl << endl;
-
-		return;
-	}
-
-
-	pontosPartilha.at(indexPP)->adicionaBike(new Bicicleta{});
-
-	cout << endl << "Bicicleta adicionada com sucesso !" << endl << endl;
-
-	return;
-}
 
 /**
  * Adiciona um utente ao sistema.
@@ -545,63 +471,6 @@ void Sistema::removeUtente() {
 	return;
 }
 
-/**
- * Pede o nome da bicicleta que se pretende remover e remove do sistema a bicicleta com esse nome.
- * Para cada introducao do utente e verificado se o mesmo introduziu o formato de dados pedido
- * e se os dados sao validos, caso contrario e impressa uma mensagem e e lancada uma excecao.
- */
-void Sistema::removeBike() {
-
-	cout << "Remove bicicleta " << endl << endl;
-
-	string nomePP{};
-	bool cond{false};
-	int indexPP{-1};
-
-	cin.ignore(1000,'\n');
-
-	//Verifica se o nome da bicicleta a remover existe
-	while(1)
-	{
-		try {
-			cout << "Nome da Bicicleta: " ;
-			getline(cin,nomePP);
-
-			if(valid_bike(nomePP) == false)
-				throw OpcaoInvalida<string>(nomePP);
-
-			for(unsigned int i = 0; i < pontosPartilha.size(); i++)
-			{
-				for(unsigned int k = 0; k < pontosPartilha.at(i)->getBikes().size(); k++)
-				{
-					if(pontosPartilha.at(i)->getBikes().at(k)->getBikeName() == nomePP)
-					{
-						indexPP = i;
-						cond = true;
-					}
-				}
-			}
-
-			if(cond == false)
-				throw OpcaoInvalida<string>(nomePP);
-
-			break;
-		}
-		catch (OpcaoInvalida<string> &op) {
-			cout << "Bicicleta inexistente(" << op.opcao << ") ! Tente novamente." << endl;
-			cond = false;
-			cin.clear();
-		}
-	}
-
-	pontosPartilha.at(indexPP)->removeBike(nomePP);
-
-	cout << endl << "Bicicleta removida com sucesso !" << endl << endl;
-
-	return;
-
-}
-
 
 /////////////////
 // METODOS GET //
@@ -639,10 +508,6 @@ void Sistema::getInfo() const {
 	displayUtentes();
 
 	cout << endl;
-
-	cout << "Tabela de Precos:" << endl << endl;
-
-	cout << setw(20) << left << "Preco por hora: 4eur" << endl;
 
 	return;
 }
@@ -773,10 +638,73 @@ void Sistema::criarGrafo(){
  * @param index indice do utente no vetor de utentes do sistema
  */
 void Sistema::alugaBike(int index) {
-	Bicicleta* b;
-	Utilizacao ut;
-	utentes.at(index)->alugaBicicleta(b, ut);
+	if(!utentes.at(index)->getAvailable()){
+		cout << "Ainda nao devolveu a bicicleta atual!" << endl << endl;
+		return;
+	}
 
+	Localizacao l = utentes.at(index)->getLocalizacao();
+	int id = closestPoint(l).getID();
+	grafo.dijkstraShortestPath(id);
+
+	Vertex<int> min = minDistance(true);
+	string name;
+	float dist;
+	int idPP;
+
+	if(min.getInfo()==NULL){
+		cout << "[Os pontos encontram-se todos cheios ou nao sao alcancaveis, tente mais tarde!]" << endl;
+		return;
+	}
+
+	for(unsigned int i=0; i<pontosPartilha.size(); i++)
+		if(pontosPartilha.at(i)->getID()==min.getInfo()){
+			idPP = i;
+			name = pontosPartilha.at(i)->getNome();
+		}
+
+	dist = min.getDist()*1000;
+
+	Data d;
+	Utilizacao ut(0, d, name);
+	string option;
+
+	if(dist!=0){
+		cout << "O ponto mais proximo com bicicletas disponiveis para aluguer e o ponto: " << name;
+		cout << ", que implica uma deslocacao de " << dist << " metros." << endl;
+
+		while(1)
+		{
+			try {
+
+				cout << endl << "Deseja prosseguir (Y/N)?";
+				cin >> option;
+				cin.ignore(1000,'\n');
+
+				if(option!="Y" && option!="N")
+					throw OpcaoInvalida<string>(option);
+
+				break;
+			}
+			catch (OpcaoInvalida<string> &op){
+
+				cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
+				cin.clear();
+			}
+		};
+
+		Localizacao locpp(pontosPartilha.at(idPP)->getLongitude(), pontosPartilha.at(idPP)->getLatitude());
+
+		if(option=="Y"){
+			utentes.at(index)->setUtenteLocation(locpp);
+		}else{
+			cout << "Operacao cancelada com sucesso!" << endl << endl;
+			return;
+		}
+	}
+
+	utentes.at(index)->alugaBicicleta(pontosPartilha.at(idPP)->removeBike(), ut);
+	cout << "Bicicleta alugada com sucesso no ponto " << name << endl << endl;
 }
 
 Node Sistema::closestPoint(Localizacao l){
@@ -791,20 +719,22 @@ Node Sistema::closestPoint(Localizacao l){
 	return minNode;
 }
 
-Vertex<int> Sistema::minDistance(){
+Vertex<int> Sistema::minDistance(bool modo_devolve){
 	double min=INF;
 	unsigned int minIndex=-1;
-	bool isPP;	//verifica se existe um ponto de partilha no vertice
+	bool isvalidPP;	//verifica se existe um ponto de partilha no vertice
 	for(int i=0; i<grafo.getNumVertex(); i++){
-		isPP=false;
+		isvalidPP=false;
 		for(unsigned int j=0; j<pontosPartilha.size(); j++)
-			if(pontosPartilha.at(j)->getID()==grafo.getVertexSet().at(i)->getInfo())
-				isPP=true;
-		if(grafo.getVertexSet().at(i)->getDist()<=min && isPP){
+			if(pontosPartilha.at(j)->getID()==grafo.getVertexSet().at(i)->getInfo() && (!modo_devolve || !pontosPartilha.at(j)->isFull()))
+				isvalidPP=true;
+		if(grafo.getVertexSet().at(i)->getDist()<min && isvalidPP){
 			min=grafo.getVertexSet().at(i)->getDist();
 			minIndex=i;
 		}
 	}
+	if(minIndex==-1)
+		return Vertex<int>(NULL);
 	return *grafo.getVertexSet().at(minIndex);
 }
 
@@ -817,85 +747,168 @@ double Sistema::getDist(PontoPartilha p){
 }
 
 
-vector<pair<float,int>> Sistema::organizePair(){
+vector<pair<float,int>> Sistema::organizePair(bool modo_devolve){
 	vector<pair<float,int > > idDist;
 	for(int i=0; i<pontosPartilha.size(); i++){
 		float factor=0;
 		int id = pontosPartilha.at(i)->getID();
 		double d = getDist(*pontosPartilha.at(i));
 		double price = pontosPartilha.at(i)->getPrice();
-
 		factor = price * d;
-
-		idDist.push_back(make_pair(factor,id));
+		if(getDist(*pontosPartilha.at(i))!=INF && (!modo_devolve || !pontosPartilha.at(i)->isFull()))
+			idDist.push_back(make_pair(factor,id));
 	}
-
 	return idDist;
 }
 
-pair<float, int> Sistema::bestChoice(){
-	vector<pair<float, int> > idFactor = organizePair();
-	sort(idFactor.begin(), idFactor.end());
-
-	return idFactor[0];
+pair<float, int> Sistema::bestChoice(bool modo_devolve){
+	vector<pair<float, int> > idFactor = organizePair(modo_devolve);
+	if(!idFactor.empty()){
+		sort(idFactor.begin(), idFactor.end());
+		return idFactor[0];
+	}
+	else
+		return pair<float, int>(NULL,NULL);
 }
 
-pair<float, int> Sistema::cheapestPoint(){
+pair<float, int> Sistema::cheapestPoint(bool modo_devolve){
 	vector<pair<double,int>> cheap;
 	for(int i=0; i<pontosPartilha.size(); i++){
-		cheap.push_back(make_pair(pontosPartilha.at(i)->getPrice(), pontosPartilha.at(i)->getID()));
+		if(getDist(*pontosPartilha.at(i))!=INF && (!modo_devolve || !pontosPartilha.at(i)->isFull()))
+			cheap.push_back(make_pair(pontosPartilha.at(i)->getPrice(), pontosPartilha.at(i)->getID()));
 	}
-	sort(cheap.begin(), cheap.end());
-	return cheap[0];
+	if(!cheap.empty()){
+		sort(cheap.begin(), cheap.end());
+		return cheap[0];
+	}
+	else
+		return pair<float, int>(NULL,NULL);
 }
 
 void Sistema::devolveBike(int index) {
+	if(utentes.at(index)->getAvailable()){
+		cout << "Ainda nao alugou uma bicicleta!" << endl << endl;
+		return;
+	}
+
 	Localizacao l = utentes.at(index)->getLocalizacao();
 	int id = closestPoint(l).getID();
 	grafo.dijkstraShortestPath(id);
 
-	Vertex<int> min = minDistance();
-	string name;
+	Vertex<int> min = minDistance(true);
+	string name1, name2, name3;
+	int idPP1, idPP2, idPP3;
 	float price, dist;
+
+	if(min.getInfo()==NULL){
+		cout << "[Os pontos encontram-se todos cheios ou nao sao alcancaveis, tente mais tarde!]" << endl;
+		return;
+	}
 
 	//----- POR DISTANCIA ----- //
 	for(unsigned int i=0; i<pontosPartilha.size(); i++){
 		if(pontosPartilha.at(i)->getID()==min.getInfo()){
-			name = pontosPartilha.at(i)->getNome();
+			idPP1=i;
+			name1 = pontosPartilha.at(i)->getNome();
 			price=trunc(100 * pontosPartilha.at(i)->getPrice()) / 100;
 		}
 	}
 	dist = min.getDist()*1000;
 
-	cout << "PONTO DE ENTREGA MAIS PROXIMO: " << name;
+	if(dist==0){
+		pontosPartilha.at(idPP1)->adicionaBike(utentes.at(index)->removeBicicleta());
+		cout << "Bicicleta devolvida com sucesso no Ponto de Partilha " << name1 << endl << endl;
+		return;
+	}
+
+	cout << "PONTO DE ENTREGA MAIS PROXIMO: " << name1;
 	cout << " [DISTANCIA: " << dist << " metros  |  PRECO: " << price << " euro(s)]" << endl;
 
 
 	//----- POR PRECO ----- //
 	for(unsigned int i=0; i<pontosPartilha.size(); i++){
-		if(pontosPartilha.at(i)->getID()==cheapestPoint().second){
-			name = pontosPartilha.at(i)->getNome();
-			price=trunc(100 * cheapestPoint().first) / 100;
+		if(pontosPartilha.at(i)->getID()==cheapestPoint(true).second){
+			idPP2=i;
+			name2 = pontosPartilha.at(i)->getNome();
+			price=trunc(100 * cheapestPoint(true).first) / 100;
 			dist=getDist(*pontosPartilha.at(i))*1000;
 		}
 	}
 
-	cout << "PONTO DE ENTREGA MAIS BARATO: " << name;
+	cout << "PONTO DE ENTREGA MAIS BARATO: " << name2;
 	cout << " [DISTANCIA: " << dist << " metros  |  PRECO: " << price << " euro(s)]" << endl;
 
 
 	//----- POR RELACAO PRECO/DISTANCIA ----- //
 	for(unsigned int i=0; i<pontosPartilha.size(); i++){
-		if(pontosPartilha.at(i)->getID()==bestChoice().second){
-			name = pontosPartilha.at(i)->getNome();
-			price=trunc(100 * bestChoice().first/getDist(*pontosPartilha.at(i))) / 100;
+		if(pontosPartilha.at(i)->getID()==bestChoice(true).second){
+			idPP3=i;
+			name3 = pontosPartilha.at(i)->getNome();
+			price=trunc(100 * bestChoice(true).first/getDist(*pontosPartilha.at(i))) / 100;
 			dist=getDist(*pontosPartilha.at(i))*1000;
 		}
 	}
 
-	cout << "PONTO DE ENTREGA MAIS EM CONTA (considerando altitude, preco e distancia): " << name;
+	cout << "PONTO DE ENTREGA MAIS EM CONTA (considerando altitude, preco e distancia): " << name3;
 	cout << " [DISTANCIA: " << dist << " metros  |  PRECO: " << price << " euro(s)]" << endl;
 
+	string option{};
+	int value{};
+
+	cout << endl << endl << "Opcoes para devolucao de bicicleta:" << endl << endl;
+	cout << "1  - Ponto de entrega mais proximo" << endl;
+	cout << "2  - Ponto de entrega mais barato" << endl;
+	cout << "3  - Ponto de entrega mais em conta" << endl;
+	cout << "4  - Cancelar" << endl << endl;
+
+	while(1)
+	{
+		try {
+
+			cout << endl << "Introduza uma opcao (1-4): ";
+			cin >> option;
+			cin.ignore(1000,'\n');
+
+			if(valid_number(option) == false)
+				throw OpcaoInvalida<string>(option);
+
+			value = stoi(option);
+
+			if(value < 1 || value > 4)
+				throw OpcaoInvalida<int>(value);
+
+			break;
+		}
+		catch (OpcaoInvalida<int> &op){
+
+			cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
+			cin.clear();
+		}
+		catch (OpcaoInvalida<string> &op){
+
+			cout << "Opcao invalida(" << op.opcao << ") ! Tente novamente." << endl;
+			cin.clear();
+		}
+	};
+
+	switch (value)
+	{
+	case 1:
+		pontosPartilha.at(idPP1)->adicionaBike(utentes.at(index)->removeBicicleta());
+		cout << "Bicicleta devolvida com sucesso no Ponto de Partilha " << name1 << endl << endl;
+		break;
+	case 2:
+		pontosPartilha.at(idPP2)->adicionaBike(utentes.at(index)->removeBicicleta());
+		cout << "Bicicleta devolvida com sucesso no Ponto de Partilha " << name2 << endl << endl;
+		break;
+	case 3:
+		pontosPartilha.at(idPP3)->adicionaBike(utentes.at(index)->removeBicicleta());
+		cout << "Bicicleta devolvida com sucesso no Ponto de Partilha " << name3 << endl << endl;
+		break;
+	case 4:
+		cout << "Operacao cancelada com sucesso!" << endl << endl;
+		break;
+	}
 }
 
 
@@ -940,7 +953,7 @@ void Sistema::system_Manager(unsigned int index, string bikeName) {
 				Bicicleta* bike = pontosPartilha.at(indicesSup5.at(k))->getBikes().at(0);
 
 				pontosPartilha.at(index)->adicionaBike(bike);
-				pontosPartilha.at(indicesSup5.at(k))->removeBike(bike->getBikeName());
+				pontosPartilha.at(indicesSup5.at(k))->removeBike();
 			}
 
 			if(pontosPartilha.at(index)->getBikes().size() == 5)
@@ -960,7 +973,7 @@ void Sistema::system_Manager(unsigned int index, string bikeName) {
 				Bicicleta* bike = pontosPartilha.at(index)->getBikes().at(0);
 
 				pontosPartilha.at(indicesInf5.at(k))->adicionaBike(bike);
-				pontosPartilha.at(index)->removeBike(bike->getBikeName());
+				pontosPartilha.at(index)->removeBike();
 			}
 
 			if(pontosPartilha.at(index)->getBikes().size() == 5)

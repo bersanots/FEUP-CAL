@@ -31,8 +31,9 @@ public:
 
 	//Others
 	void limpaVectorBike();
-	void removeBike(string name);
+	Bicicleta* removeBike();
 	void adicionaBike(Bicicleta* bike);
+	bool isFull() const;
 	friend ostream & operator <<(ostream & o, const PontoPartilha & p);
 	friend istream & operator >>(istream & i, PontoPartilha & p);
 };

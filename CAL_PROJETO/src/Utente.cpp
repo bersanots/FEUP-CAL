@@ -44,12 +44,10 @@ void Utente::alugaBicicleta(Bicicleta* b, Utilizacao ut) {
  * @param index_distancias vetor de indice dos pontos de partilha ordenados por distancia
  * @return Retorna um apontador para bicicleta que o utente possuia.
  */
-Bicicleta* Utente::removeBicicleta(vector<int> index_distancias) {
-
+Bicicleta* Utente::removeBicicleta() {
 	Bicicleta* b = bike;
 	setAvailable();
 	setBike(0);
-
 	return b;
 }
 

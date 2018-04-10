@@ -25,7 +25,6 @@ public:
 	//Metodos add
 	void addPontoPartilha();
 	void addNewUtente();
-	void adicionaBike();
 	void addNewUtente(Utente* u1);				/**< Necessario para inclusao direta no sistema dos utente extraidos do ficheiro.*/
 	void addPontoPartilha(PontoPartilha* p);	/**< Necessario para inclusao direta no sistema dos pontos de partilha extraidos do ficheiro.*/
 	void addNode(Node n);
@@ -34,7 +33,6 @@ public:
 	//Metodos remove
 	void removePonto();
 	void removeUtente();
-	void removeBike();
 
 	//Metodos Get
 	vector<Utente* > getUtentes() const;
@@ -48,15 +46,15 @@ public:
 	//Others
 	void criarGrafo();
 	Node closestPoint(Localizacao l);
-	Vertex<int> minDistance();
-	pair<float, int> bestChoice();
-	pair<float, int> cheapestPoint();
+	Vertex<int> minDistance(bool modo_devolve);
+	pair<float, int> bestChoice(bool modo_devolve);
+	pair<float, int> cheapestPoint(bool modo_devolve);
 	void alugaBike(int index);
 	void devolveBike(int index);
 	void system_Manager(unsigned int index, string bikeType);
 	void displayNearestPP(int index) const;
 	void displayUtentes() const;
-	vector<pair<float,int>> organizePair();
+	vector<pair<float,int>> organizePair(bool modo_devolve);
 	double getDist(PontoPartilha p);
 
 };

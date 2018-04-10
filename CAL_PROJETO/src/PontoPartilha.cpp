@@ -27,13 +27,10 @@ PontoPartilha::PontoPartilha(long long id, double lon, double lat, double alt, u
  * Remove a bicicleta bike do ponto de partilha.
  * @param name nome da bicicleta que se pretende remover
  */
-void PontoPartilha::removeBike(string name) {
-
-	for(unsigned int i = 0; i < bicicletas.size(); i++)
-	{
-		if(bicicletas.at(i)->getBikeName() == name)
-			bicicletas.erase(bicicletas.begin() + i);
-	}
+Bicicleta* PontoPartilha::removeBike() {
+	Bicicleta* b = bicicletas.at(0);
+	bicicletas.erase(bicicletas.begin());
+	return b;
 }
 
 /**
@@ -51,6 +48,9 @@ void PontoPartilha::limpaVectorBike(){
 	bicicletas.clear();
 }
 
+bool PontoPartilha::isFull() const{
+	return capacidade==bicicletas.size();
+}
 
 /////////////////
 // METODOS GET //

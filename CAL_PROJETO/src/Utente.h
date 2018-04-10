@@ -46,7 +46,7 @@ public:
 
 	//Others
 	void alugaBicicleta(Bicicleta* b, Utilizacao ut);
-	Bicicleta* removeBicicleta(vector<int> index_distancias);
+	Bicicleta* removeBicicleta();
 	void updateLocation(int index);
 	void displayHistoric() ;
 
