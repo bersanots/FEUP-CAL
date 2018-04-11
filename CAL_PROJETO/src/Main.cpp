@@ -19,11 +19,11 @@ int main()
 	// Zona de inicializacao do programa //
 	///////////////////////////////////////
 
-	mensagemInicial();
+
 
 	Sistema sys{};
 
-	cout << "APPLICATION LOADING";
+	cout << "\nAPPLICATION LOADING\n\n";
 
 	checkinSys(sys);
 
