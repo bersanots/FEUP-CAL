@@ -5,7 +5,7 @@ void graphviewer_displayPath(Sistema &ER);
 
 void graphviewer_displayPath(Sistema &ER)
 {
-	vector<int> path = ER.path_mindist();
+	vector<int> path = ER.path_rentavel();
 	for(unsigned int i=0;i<path.size();i++)
 		cout << path.at(i);
 	GraphViewer *gv = new GraphViewer { 800, 800, false };
