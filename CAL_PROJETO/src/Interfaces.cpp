@@ -1,5 +1,168 @@
 #include "Includes.h"
 #include "Sistema.h"
+#include "GraphViewer.h"
+void graphviewer_displayPath(Sistema &ER);
+
+void graphviewer_displayPath(Sistema &ER)
+{
+	vector<int> path = ER.path_mindist();
+	for(unsigned int i=0;i<path.size();i++)
+		cout << path.at(i);
+	GraphViewer *gv = new GraphViewer { 800, 800, false };
+		gv->createWindow(800,800);
+		gv->defineEdgeColor("blue");
+		gv->defineVertexColor("yellow");
+		gv->defineEdgeCurved(false);
+
+		ifstream inFile;
+
+		//Ler o ficheiro nos.txt
+		inFile.open("nodes.txt");
+
+		if (!inFile) {
+			cerr << "Unable to open file nodes.txt";
+			exit(1);   // call system to stop
+		}
+
+		std::string   line,line2,line3;
+
+		int idNo=0;
+		double X=0;
+		double Y=0;
+		int idStore=0;
+		string a="";
+		path={6,5,4,31,3};
+
+		double longmin=INF, latmin=INF, longmax=-INF, latmax=-INF;
+
+		for(auto n : ER.getNodes()){
+			if(n.getLongitude()<longmin)
+				longmin=n.getLongitude();
+			if(n.getLatitude()<latmin)
+				latmin=n.getLatitude();
+			if(n.getLongitude()>longmax)
+				longmax=n.getLongitude();
+			if(n.getLatitude()>latmax)
+				latmax=n.getLatitude();
+		}
+
+
+		string letra;
+		while(std::getline(inFile, line))
+		{
+
+			std::stringstream linestream(line);
+			std::string         data;
+
+			linestream >> idNo;
+			std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+			linestream >> X;
+			std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+			linestream >> Y;
+			std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+
+			X=(X-longmin)/(longmax-longmin)*2000;
+			Y=(Y-latmin)/(latmax-latmin)*2000;
+
+			gv->addNode(idNo,Y,X);//-----------------------------------------------------------------------
+
+			ifstream store;
+			store.open("pontosPartilha.txt");
+			if (!store)
+			{
+				cerr << "Unable to open file pontosPartilha.txt";
+				exit(1);   // call system to stop
+			}
+
+			while(std::getline(store, line3))
+			{
+				std::stringstream linestream3(line3);
+
+				std::getline(linestream3, data, '/');  // read up-to the first ; (discard ;).
+				linestream3 >> idStore;
+				std::getline(linestream3, data, '/');
+				if(idStore==idNo)
+				{
+					gv->setVertexColor(idNo,"green");
+				}
+			}
+			store.close();
+		}
+
+		inFile.close();
+
+
+		//Ler o ficheiro arestas.txt
+		inFile.open("subroads.txt");
+
+		if (!inFile) {
+			cerr << "Unable to open file datafile.txt";
+			exit(1);   // call system to stop
+		}
+
+		int idAresta=0;
+		int idStreet=0;
+		int idNoOrigem=0;
+		int idNoDestino=0;
+		string nomeRua="";
+		int Direcao;
+		double rua=0;
+
+		while(std::getline(inFile, line))
+		{
+			std::stringstream linestream(line);
+
+			std::string data;
+
+			idAresta++;
+			linestream >> rua;
+
+			std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+			linestream >> idNoOrigem;
+			std::getline(linestream, data, ';');  // read up-to the first ; (discard ;).
+			linestream >> idNoDestino;
+			ifstream street;
+			for(unsigned int i=0; i<path.size();i++)
+			{
+				if(idNoOrigem==path.at(i))
+				{
+					for(unsigned int j=0; j< path.size();j++)
+						if(idNoDestino==path.at(j))
+						//	gv->setEdgeThickness(idAresta,4);
+							gv->setEdgeColor(idAresta,"red");
+				}
+			}
+			street.open("roads.txt");
+			if (!street) {
+				cerr << "Unable to open file datafile.txt";
+				exit(1);   // call system to stop
+			}
+			while(std::getline(street, line2))
+			{
+				std::stringstream linestream2(line2);
+				linestream2 >> idStreet;
+				if(idStreet==rua)
+				{
+					std::getline(linestream2, data, ';');  // read up-to the first ; (discard ;).
+					linestream2 >> nomeRua;
+					std::getline(linestream2, data, ';');
+					linestream2 >> Direcao;
+				}
+			}
+			if(Direcao==0)
+				gv->addEdge(idAresta,idNoOrigem,idNoDestino, EdgeType::UNDIRECTED);
+
+			else if (Direcao==1)
+				gv->addEdge(idAresta,idNoOrigem,idNoDestino, EdgeType::DIRECTED);
+		}
+
+		inFile.close();
+
+
+		gv->rearrange();
+
+}
+
 
 /////////////////////////////////////
 // IMPLEMENTACAO DE FUNCOES GERAIS //
@@ -162,7 +325,7 @@ void menu_interface(Sistema &ER){
 		cout << "2  - Devolver bicicleta" << endl;
 		cout << "3  - Historico" << endl;
 		cout << "4  - Atualizar localizacao" << endl;
-		cout << "5  - Pontos de partilha mais proximos" << endl;
+		cout << "5  - Pontos de partilha mais proximos / GraphViewer caminho mais curto" << endl;
 		cout << "6  - Informacoes sobre ECO_RIDES" << endl;
 		cout << "7  - Logout" << endl << endl;
 
@@ -215,6 +378,7 @@ void menu_interface(Sistema &ER){
 			utente->updateLocation(index);
 			break;
 		case 5:
+			graphviewer_displayPath(ER);
 			ER.displayNearestPP(index);
 			break;
 		case 6:

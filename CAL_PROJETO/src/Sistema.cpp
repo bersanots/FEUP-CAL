@@ -1012,3 +1012,9 @@ void Sistema::displayUtentes() const {
 
 }
 
+vector<int> Sistema::path_mindist() {
+	vector<int> a =grafo.getPath(2,15);
+
+	return a;
+
+}

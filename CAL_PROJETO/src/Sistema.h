@@ -56,6 +56,8 @@ public:
 	void displayUtentes() const;
 	vector<pair<float,int>> organizePair(bool modo_devolve);
 	double getDist(PontoPartilha p);
+	vector<int> path_mindist();
+
 
 };
 
