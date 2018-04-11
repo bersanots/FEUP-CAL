@@ -6,8 +6,6 @@ void graphviewer_displayPath(Sistema &ER, double cliente);
 void graphviewer_displayPath(Sistema &ER,double cliente)
 {
 	vector<int> path = ER.path_rentavel(cliente);
-	for(unsigned int i=0;i<path.size();i++)
-		cout << path.at(i);
 	GraphViewer *gv = new GraphViewer { 800, 800, false };
 		gv->createWindow(800,800);
 		gv->defineEdgeColor("blue");
