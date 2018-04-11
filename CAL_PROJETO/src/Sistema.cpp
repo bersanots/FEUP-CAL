@@ -1014,8 +1014,10 @@ void Sistema::displayUtentes() const {
 
 vector<int> Sistema::path_rentavel(double client) {
 	Localizacao L(utentes.at(client)->getLocalizacao());
+
 	double g = bestChoice(true).second;
 	double id = closestPoint(L).getID();
+
 	vector<int> a =grafo.getPath(id,g);
 
 	return a;

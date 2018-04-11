@@ -1,11 +1,11 @@
 #include "Includes.h"
 #include "Sistema.h"
 #include "GraphViewer.h"
-void graphviewer_displayPath(Sistema &ER);
+void graphviewer_displayPath(Sistema &ER, double cliente);
 
-void graphviewer_displayPath(Sistema &ER)
+void graphviewer_displayPath(Sistema &ER,double cliente)
 {
-	vector<int> path = ER.path_rentavel();
+	vector<int> path = ER.path_rentavel(cliente);
 	for(unsigned int i=0;i<path.size();i++)
 		cout << path.at(i);
 	GraphViewer *gv = new GraphViewer { 800, 800, false };
@@ -378,7 +378,7 @@ void menu_interface(Sistema &ER){
 			utente->updateLocation(index);
 			break;
 		case 5:
-			graphviewer_displayPath(ER);
+			graphviewer_displayPath(ER,value);
 			ER.displayNearestPP(index);
 			break;
 		case 6:
