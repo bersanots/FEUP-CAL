@@ -8,13 +8,13 @@
 
 class Utente {
 protected:
-	static int lastId;				/**< Numero de Identificacao do ultimo utente registado. */
-	int id;							/**< Numero de Identificacao do utente. */
-	string nome;					/**< Nome do utente. */
-	Localizacao local;				/**< Localizacao atual do utente. */
-	Bicicleta* bike;				/**< Bicicleta que o utente esta a usar, caso nao esteja a usar nenhuma, o valor de bike = 0. */
-	vector<Utilizacao> historico;	/**< Utilizacoes liquidadas do utente. */
-	bool disponivel = true;			/**< Se o utente esta a usar uma bicicleta disponivel = false, caso contrario disponivel = true. */
+	static int lastId;
+	int id;
+	string nome;
+	Localizacao local;
+	Bicicleta* bike;
+	vector<Utilizacao> historico;
+	bool disponivel = true;
 public:
 	Utente();
 	Utente(string nome, Localizacao spot);
@@ -39,9 +39,6 @@ public:
 	void setNome(string nome);
 	void addUse(Utilizacao ut);
 
-	/**
-	 * Destrutor virtual.
-	 */
 	virtual ~Utente() {};
 
 	//Others
@@ -53,11 +50,6 @@ public:
 
 };
 
-
-/**
- * Overload do operador de insercao usado para escrever os objetos do tipo Regular nos ficheiros,
- * de modo a guardar a informacao do sistema.
- */
 
 inline ostream& operator <<(ostream & o, Utente u)
 {
@@ -71,10 +63,6 @@ inline ostream& operator <<(ostream & o, Utente u)
 	return o;
 }
 
-/**
- * Overload do operador de extracao usado para recolher dos ficheiros os objetos do tipo Regular,
- * de modo a recriar o sistema da ultima execucao.
- */
 
 inline istream& operator >>(istream & i, Utente & u) {
 	char b2{}, b3{}, b4{};

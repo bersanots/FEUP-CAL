@@ -1,8 +1,5 @@
 #include "Sistema.h"
 
-/**
- * Construtor padrao da classe PontoPartilha.
- */
 PontoPartilha::PontoPartilha() : Node(){
 	this->altitude = 0;
 	this->capacidade = 0;
@@ -10,40 +7,23 @@ PontoPartilha::PontoPartilha() : Node(){
 	this->nome = "";
 }
 
-/**
- * Construtor da classe PontoPartilha.
- * @param name nome do ponto de partilha
- * @param spot localizacao do ponto de partilha
- * @param storage capacidade do ponto de partilha
- */
-PontoPartilha::PontoPartilha(long long id, double lon, double lat, double alt, unsigned int storage,string name) : Node(id,lon,lat) {
+PontoPartilha::PontoPartilha(int id, double lon, double lat, double alt, unsigned int storage,string name) : Node(id,lon,lat) {
 	this->altitude = alt;
 	this->capacidade = storage;
 	this->preco = 10/alt;
 	this->nome = name;
 }
 
-/**
- * Remove a bicicleta bike do ponto de partilha.
- * @param name nome da bicicleta que se pretende remover
- */
 Bicicleta* PontoPartilha::removeBike() {
 	Bicicleta* b = bicicletas.at(0);
 	bicicletas.erase(bicicletas.begin());
 	return b;
 }
 
-/**
- * Adiciona a bicicleta bike do ponto de partilha.
- * @param bike apontador de bicicleta que se pretende adicionar
- */
 void PontoPartilha::adicionaBike(Bicicleta* bike) {
 	bicicletas.push_back(bike);
 }
 
-/**
- * Limpa o vetor das bicicletas do ponto de partilha, de modo que o mesmo fica sem bicicletas.
- */
 void PontoPartilha::limpaVectorBike(){
 	bicicletas.clear();
 }
@@ -56,16 +36,10 @@ bool PontoPartilha::isFull() const{
 // METODOS GET //
 /////////////////
 
-/**
- * @return Retorna o nome do ponto de partilha.
- */
 string PontoPartilha::getNome() const {
 	return nome;
 }
 
-/**
- * @return Retorna a localizacao do ponto de partilha.
- */
 Localizacao PontoPartilha::getLocal() const {
 	return coords;
 }
@@ -74,17 +48,10 @@ double PontoPartilha::getAltitude() const{
 	return altitude;
 }
 
-/**
- * @return Retorna a capacidade do ponto de partilha.
- */
 unsigned int PontoPartilha::getCapacidade() const {
 	return capacidade;
 }
 
-
-/**
- * @return Retorna as bicicletas do ponto de partilha.
- */
 vector<Bicicleta *> PontoPartilha::getBikes() const {
 	return bicicletas;
 }
@@ -100,10 +67,6 @@ double PontoPartilha::getPrice() {
 // METODOS SET //
 /////////////////
 
-/**
- * Altera o nome do ponto de partilha.
- * @param name novo nome
- */
 void PontoPartilha::setNome(string name) {
 	this->nome = name;
 }

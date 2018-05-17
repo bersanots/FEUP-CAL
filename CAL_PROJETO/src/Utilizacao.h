@@ -6,7 +6,7 @@ class Data {
 protected:
 	unsigned int dia, mes, ano;
 public:
-	Data();		/**< Necessario para o overload do operador de extracao na classe utente.*/
+	Data();
 	Data(unsigned int dia,unsigned int mes,unsigned int ano);
 	friend ostream & operator<<(ostream & o, const Data & d);
 	friend istream & operator>>(istream & i, Data & d);
@@ -22,19 +22,12 @@ public:
 	void setAno(unsigned int a);
 };
 
-/**
- * Overload do operador de insercao usado para escrever os objetos do tipo Data nos ficheiros,
- * de modo a guardar a informacao do sistema.
- */
+
 inline ostream & operator<< (ostream & o, const Data & d){
 	o << d.dia << '/' << d.mes << '/' << d.ano;
 	return o;
 }
 
-/**
- * Overload do operador de extracao usado para recolher dos ficheiros os objetos do tipo Data,
- * de modo a recriar o sistema da ultima execucao.
- */
 inline istream & operator>> (istream & i, Data & d)
 {
 	char b1{}, b2{};
@@ -44,11 +37,11 @@ inline istream & operator>> (istream & i, Data & d)
 
 class Utilizacao {
 private:
-	Data data;				/**< Data da respetiva utilizacao.*/
-	unsigned int useTime;	/**< Numero de horas de uso da bicicleta.*/
-	string pontoPartilha;	/**< Nome do ponto de partilha onde a bicicleta foi alugada.*/
+	Data data;
+	unsigned int useTime;
+	string pontoPartilha;
 public:
-	Utilizacao();			/**< Necessario para o overload do operador de extracao na classe utente*/
+	Utilizacao();
 	Utilizacao(unsigned int numHours, Data d, string pp);
 
 	//Metodos Get
@@ -70,20 +63,13 @@ public:
 	friend class Data;
 };
 
-/**
- * Overload do operador de insercao usado para escrever os objetos do tipo Utilizacao nos ficheiros,
- * de modo a guardar a informacao do sistema.
- */
+
 inline ostream& operator <<(ostream & o, const Utilizacao & u)
 {
 	o << u.getPPName() << '-' << u.getUseTime() << '-' <<  u.getData();
 	return o;
 }
 
-/**
- * Overload do operador de extracao usado para recolher dos ficheiros os objetos do tipo Utilizacao,
- * de modo a recriar o sistema da ultima execucao.
- */
 inline istream& operator >>(istream & i, Utilizacao & u) {
 	char b1{};
 	string str{};

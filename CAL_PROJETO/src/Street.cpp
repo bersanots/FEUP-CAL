@@ -1,19 +1,22 @@
 #include "Street.h"
 
 Street::Street() {
+	this->id = 0;
+	this->name = "";
+	this->twoWays = twoWays;
 }
 
-Street::Street(long long id, string name, vector<Vertex<Node>*> vertices, bool twoWays) {
+Street::Street(int id, string name, vector<Vertex<Node>*> vertices, bool twoWays) {
 	this->id = id;
 	this->name = name;
 	this->vertices = vertices;
-	this->twoWays = twoWays;
+	this->twoWays = false;
 }
 
 Street::~Street() {
 }
 
-long long Street::getID() const {
+int Street::getID() const {
 	return this->id;
 }
 
@@ -25,7 +28,7 @@ vector<Vertex<Node>*> Street::getVertices() const {
 	return this->vertices;
 }
 
-void Street::setID(long long id){
+void Street::setID(int id){
 	this->id = id;
 }
 

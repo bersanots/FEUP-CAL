@@ -2,14 +2,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Grafos.h"
+
+#include "Grafo.h"
 #include "Node.h"
 
 using namespace std;
 
 class Street {
 private:
-	long long id;
+	int id;
 	string name;
 	vector<Vertex<Node>*> vertices;
 	bool twoWays;
@@ -17,11 +18,11 @@ private:
 public:
 	Street();
 	~Street();
-	Street(long long id, string name, vector<Vertex<Node>*> vertices, bool twoWays);
-	long long getID() const;
+	Street(int id, string name, vector<Vertex<Node>*> vertices, bool twoWays);
+	int getID() const;
 	string getName() const;
 	vector<Vertex<Node>*> getVertices() const;
-	void setID(long long id);
+	void setID(int id);
 	void setName(string name);
 	void setTwoWays(bool value);
 	void addVertex(Vertex<Node>* no);

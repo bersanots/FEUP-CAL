@@ -9,12 +9,12 @@
 class PontoPartilha : public Node{
 	double altitude;
 	float preco;
-	unsigned int capacidade;					/**< Capacidade do ponto de partilha. */
-	vector<Bicicleta*> bicicletas;				/**< Bicicletas existentes no ponto de partilha. */
-	string nome;								/**< Nome do ponto de partilha. */
+	unsigned int capacidade;
+	vector<Bicicleta*> bicicletas;
+	string nome;
 public:
-	PontoPartilha();	/**< Necessario para o overload do operador de extracao na classe utente.*/
-	PontoPartilha(long long id, double lon, double lat, double alt, unsigned int storage,string name);
+	PontoPartilha();
+	PontoPartilha(int id, double lon, double lat, double alt, unsigned int storage,string name);
 
 	//Metodos Get
 	Localizacao getLocal() const;
@@ -38,20 +38,11 @@ public:
 	friend istream & operator >>(istream & i, PontoPartilha & p);
 };
 
-/**
- * Overload do operador de insercao usado para escrever os objetos do tipo PontoPartilha nos ficheiros,
- * de modo a guardar a informacao do sistema.
- */
 inline ostream& operator <<(ostream & o, const PontoPartilha & p)
 {
 	o << p.getNome() << '/' << p.getID() << '/' << p.getLocal() << '/' << p.getAltitude() << '/' << p.getCapacidade() << '/' << p.getBikes().size() << '/';
 	return o;
 }
-
-/**
- * Overload do operador de extracao usado para recolher dos ficheiros os objetos do tipo PontoPartilha,
- * de modo a recriar o sistema da ultima execucao.
- */
 
 inline istream& operator >>(istream & i, PontoPartilha & p)
 {
@@ -59,7 +50,7 @@ inline istream& operator >>(istream & i, PontoPartilha & p)
 	Localizacao loc;
 	double alt;
 	unsigned int n1, n2;
-	long long id=0;
+	int id=0;
 	char b1=0, b2=0, b3=0, b4=0, b5=0;
 
 	Bicicleta * b = new Bicicleta; //apontador generico apenas para reservar espaco no vetor

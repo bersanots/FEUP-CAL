@@ -5,33 +5,31 @@
 #include "Utente.h"
 #include "PontoPartilha.h"
 #include "Localizacao.h"
-#include "Grafos.h"
 #include "Node.h"
 #include "Street.h"
+#include "graphviewer.h"
+#include "Grafo.h"
+
 
 class Sistema {
-	vector<PontoPartilha* > pontosPartilha;		/**< Pontos de partilha referentes ao sistema. */
-	vector<Utente* > utentes;					/**< Utentes referentes ao sistema. */
+	vector<PontoPartilha* > pontosPartilha;
+	vector<Utente* > utentes;
 	Graph<int> grafo;
 	vector<Node> nos;
 	vector<Street> estradas;
+	Data dataAtual;
 
 public:
-	/**
-	 *  Construtor padrao da classe Sistema
-	 */
-	Sistema() {}
+	Sistema() {this->dataAtual = Data(11,4,2018);}
 
 	//Metodos add
-	void addPontoPartilha();
 	void addNewUtente();
-	void addNewUtente(Utente* u1);				/**< Necessario para inclusao direta no sistema dos utente extraidos do ficheiro.*/
-	void addPontoPartilha(PontoPartilha* p);	/**< Necessario para inclusao direta no sistema dos pontos de partilha extraidos do ficheiro.*/
+	void addNewUtente(Utente* u1);
+	void addPontoPartilha(PontoPartilha* p);
 	void addNode(Node n);
 	void addStreet(Street st);
 
 	//Metodos remove
-	void removePonto();
 	void removeUtente();
 
 	//Metodos Get
@@ -42,38 +40,23 @@ public:
 	void getInfo() const;
 	vector<int> getOrderedPP(int index) const;
 	int getUtenteIndex(int identificacao) const;
+	Data getData() const;
+	vector<int> path_rentavel(double client);
 
 	//Others
 	void criarGrafo();
-	Node closestPoint(Localizacao l);
-	Vertex<int> minDistance(bool modo_devolve);
-	pair<float, int> bestChoice(bool modo_devolve);
-	pair<float, int> cheapestPoint(bool modo_devolve);
+	void incData();
+	Node closestPoint(Localizacao l) const;
+	Vertex<int> minDistance(bool modo_devolve) const;
+	pair<float, int> bestChoice(bool modo_devolve) const;
+	pair<float, int> cheapestPoint(bool modo_devolve) const;
 	void alugaBike(int index);
 	void devolveBike(int index);
 	void system_Manager(unsigned int index, string bikeType);
-	void displayNearestPP(int index) const;
 	void displayUtentes() const;
-	vector<pair<float,int>> organizePair(bool modo_devolve);
-	double getDist(PontoPartilha p);
-	vector<int> path_rentavel(double client);
-
+	vector<pair<float,int>> organizePair(bool modo_devolve) const;
+	double getDist(PontoPartilha p) const;
+	void pesquisaRuas() const;
 
 };
-
-/**
- * Procura um valor x num vetor v de elementos comparaveis com os operadores de comparacao.
- * @param v vetor de elementos
- * @param x valor a procurar no vetor
- * @return Retorna o indice da primeira ocorrencia de x em v, se encontrar; senao, retorna -1.
- */
-template <class T>
-int SequentialSearch(const vector<T> &v, T x)
-{
-	for (unsigned int i = 0; i < v.size(); i++)
-		if (v[i] == x)
-			return i;// encontrou
-	return -1; // nao encontrou
-}
-
 

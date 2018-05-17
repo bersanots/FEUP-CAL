@@ -4,7 +4,7 @@ Node::Node() {
 	this->id = 0;
 }
 
-Node::Node(long long id, double lon, double lat) {
+Node::Node(int id, double lon, double lat) {
 	this->id = id;
 	Localizacao loc(lon,lat);
 	this->coords = loc;
@@ -13,7 +13,7 @@ Node::Node(long long id, double lon, double lat) {
 Node::~Node() {
 }
 
-void Node::setID(long long id) {
+void Node::setID(int id) {
 	this->id = id;
 }
 
@@ -21,7 +21,7 @@ void Node::setLocation(Localizacao loc){
 	this->coords = loc;
 }
 
-long long Node::getID() const {
+int Node::getID() const {
 	return this->id;
 }
 
